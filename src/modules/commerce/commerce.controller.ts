@@ -5,11 +5,11 @@ import {
   Get,
   Post,
   Body,
-  UseInterceptors,
 } from '@nestjs/common';
 import { CommerceService } from './commerce.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import { GetCommerceDTO } from '../../dto/commerce/getCommerce.dto';
+import { SetCommerceDTO } from '../../dto/commerce/setCommerce.dto';
 
 @ApiTags('Commerce')
 @Controller('commerce')
@@ -17,6 +17,10 @@ export class CommerceController {
   constructor(private commerceService: CommerceService) {}
 
   @ApiOperation({ summary: 'Get commerce' })
+  @ApiCreatedResponse({
+    description: 'Successfully',
+    type: GetCommerceDTO,
+  })
   @Get()
   async getCommerceSettings(@Res() res) {
     const commerceReq = await this.commerceService.getCommerceSettings();
@@ -25,8 +29,7 @@ export class CommerceController {
 
   @ApiOperation({ summary: 'Set commerce' })
   @Post()
-  @UseInterceptors(FileInterceptor('formdata'))
-  async setCommerceSettings(@Res() res, @Body() commerceDTO: any) {
+  async setCommerceSettings(@Res() res, @Body() commerceDTO: SetCommerceDTO) {
     const commerceReq = await this.commerceService.setCommerceSettings(
       commerceDTO,
     );
