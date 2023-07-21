@@ -35,7 +35,8 @@ model User {
   twoFA String?
   invoicePayments invoicePayment[]
   operationsHistory Operation[]
-  Projects Project[]
+  projects Project[]
+  notifications Notification[]
 }
 
 model invoicePayment {
@@ -48,6 +49,14 @@ model invoicePayment {
 }
 
 model Operation {
+  id          Int      @default(autoincrement()) @id
+  text        String
+  date        DateTime
+  recipient   User?    @relation(fields: [recipientId], references: [id])
+  recipientId Int?
+}
+
+model Notification {
   id          Int      @default(autoincrement()) @id
   text        String
   date        DateTime

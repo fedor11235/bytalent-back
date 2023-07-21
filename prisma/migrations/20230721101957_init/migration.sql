@@ -44,11 +44,21 @@ CREATE TABLE "Operation" (
 );
 
 -- CreateTable
+CREATE TABLE "Notification" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "text" TEXT NOT NULL,
+    "date" DATETIME NOT NULL,
+    "recipientId" INTEGER,
+    CONSTRAINT "Notification_recipientId_fkey" FOREIGN KEY ("recipientId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
 CREATE TABLE "Project" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "title" TEXT NOT NULL,
     "text" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL,
     "authorId" INTEGER,
     CONSTRAINT "Project_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
