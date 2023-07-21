@@ -27,9 +27,7 @@ export class LegalController {
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
   async setLegalSettings(@Res() res, @Body() legalDTO: any) {
-    const LegalReq = await this.legalService.setLegalSettings(
-      legalDTO,
-    );
+    const LegalReq = await this.legalService.setLegalSettings(legalDTO);
     return res.status(HttpStatus.OK).json(LegalReq);
   }
 }

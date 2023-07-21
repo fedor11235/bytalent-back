@@ -27,9 +27,7 @@ export class ProfileController {
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
   async setProfileSettings(@Res() res, @Body() profileDTO: any) {
-    const profileReq = await this.profileService.setProfileSettings(
-      profileDTO,
-    );
+    const profileReq = await this.profileService.setProfileSettings(profileDTO);
     return res.status(HttpStatus.OK).json(profileReq);
   }
 }
