@@ -4,24 +4,17 @@ import { User, Prisma } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private prisma: PrismaService
-  ) {}
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({
-      data,
-    });
-  }
-  async loginUser(body: any): Promise<any> {
+  constructor(private prisma: PrismaService) {}
+  async loginUser(payload: any): Promise<any> {
     return true;
   }
-  async registryUser(body: any): Promise<any> {
+  async registryUser(payload: any): Promise<any> {
     return true;
   }
-  async logout(body: any): Promise<any> {
+  async logout(payload: any): Promise<any> {
     return true;
   }
-  async deleteUser(body: any): Promise<any> {
+  async deleteUser(payload: any): Promise<any> {
     return true;
   }
 }
