@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+   
+model User {
+  id    Int     @default(autoincrement()) @id
+  name  String?
+  surname  String?
+  organization  String?
+  position  String?
+  phone  String?
+  email String?
+  balance Int?
+  companyName String?
+  organizationalForms String?
+  OGRN String?
+  INN String?
+  BankBIC String?
+  CheckingAccount String?
+  Website String?
+  Telegram String?
+  Instagram String?
+  Twitter String?
+  Behance String?
+  Artstation String?
+  Authorization String?
+  twoFA String?
+  invoicePayments invoicePayment[]
+  operationsHistory Operation[]
+  Projects Project[]
+}
+
+model invoicePayment {
+  id          Int      @default(autoincrement()) @id
+  number      String
+  text        String
+  date        DateTime
+  recipient   User?    @relation(fields: [recipientId], references: [id])
+  recipientId Int?
+}
+
+model Operation {
+  id          Int      @default(autoincrement()) @id
+  text        String
+  date        DateTime
+  recipient   User?    @relation(fields: [recipientId], references: [id])
+  recipientId Int?
+}
+
+model Project {
+  id          Int      @default(autoincrement()) @id
+  title       String
+  text        String
+  description String
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    Int?
+}

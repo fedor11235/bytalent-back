@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { User, Prisma } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
   constructor(
-    // @InjectRepository(User)
-    // private readonly userModel: Repository<User>,
-
-    // @InjectRepository(Token)
-    // private readonly tokenModel: Repository<Token>,
-
-    // private jwtService: JwtService,
+    private prisma: PrismaService
   ) {}
+  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+    return this.prisma.user.create({
+      data,
+    });
+  }
   async loginUser(body: any): Promise<any> {
     return true;
   }
