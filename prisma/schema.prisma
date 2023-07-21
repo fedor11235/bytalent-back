@@ -60,6 +60,7 @@ model Project {
   title       String
   text        String
   description String
+  active      Boolean
   author      User?    @relation(fields: [authorId], references: [id])
   authorId    Int?
 }

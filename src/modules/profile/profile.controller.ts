@@ -11,7 +11,7 @@ import { ProfileService } from './profile.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-@ApiTags('profile')
+@ApiTags('Profile')
 @Controller('profile')
 export class ProfileController {
   constructor(private profileService: ProfileService) {}

@@ -11,7 +11,7 @@ import { LegalService } from './legal.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-@ApiTags('legal')
+@ApiTags('Legal')
 @Controller('legal')
 export class LegalController {
   constructor(private legalService: LegalService) {}

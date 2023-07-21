@@ -5,8 +5,9 @@ import { ProfileModule } from './modules/profile/profile.module';
 import { LegalModule } from './modules/legal/legal.module';
 import { LinksModule } from './modules/links/links.module';
 import { SecurityModule } from './modules/security/security.module';
+import { ProjectModule } from './modules/project/project.module';
 
 @Module({
-  imports: [AuthModule, CommerceModule, ProfileModule, LegalModule, LinksModule, SecurityModule],
+  imports: [AuthModule, CommerceModule, ProfileModule, LegalModule, LinksModule, SecurityModule, ProjectModule],
 })
 export class AppModule {}
