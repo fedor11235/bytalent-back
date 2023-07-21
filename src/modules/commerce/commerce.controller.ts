@@ -27,7 +27,9 @@ export class CommerceController {
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
   async setCommerceSettings(@Res() res, @Body() commerceDTO: any) {
-    const commerceReq = await this.commerceService.setCommerceSettings(commerceDTO);
+    const commerceReq = await this.commerceService.setCommerceSettings(
+      commerceDTO,
+    );
     return res.status(HttpStatus.OK).json(commerceReq);
   }
 }
