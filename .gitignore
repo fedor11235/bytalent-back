@@ -1,6 +1,7 @@
 # env
 .env
 
+cmd
 # compiled output
 /dist
 /node_modules
