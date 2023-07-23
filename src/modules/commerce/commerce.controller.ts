@@ -5,7 +5,9 @@ import {
   Get,
   Post,
   Body,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from './../auth/auth.guard';
 import { CommerceService } from './commerce.service';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
 import { GetCommerceDTO } from '../../dto/commerce/getCommerce.dto';
@@ -21,6 +23,7 @@ export class CommerceController {
     description: 'Successfully',
     type: GetCommerceDTO,
   })
+  @UseGuards(AuthGuard)
   @Get()
   async getCommerceSettings(@Res() res) {
     const commerceReq = await this.commerceService.getCommerceSettings();

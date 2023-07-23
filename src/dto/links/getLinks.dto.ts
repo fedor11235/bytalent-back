@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GetLinksDTO {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'User website',
     required: true,
   })

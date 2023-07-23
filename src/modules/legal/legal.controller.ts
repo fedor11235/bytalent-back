@@ -6,7 +6,9 @@ import {
   Post,
   Body,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from './../auth/auth.guard';
 import { LegalService } from './legal.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
@@ -23,6 +25,7 @@ export class LegalController {
     description: 'Successfully',
     type: GetLegalDTO,
   })
+  @UseGuards(AuthGuard)
   @Get()
   async getLegalSettings(@Res() res) {
     const LegalReq = await this.legalService.getLegalSettings();

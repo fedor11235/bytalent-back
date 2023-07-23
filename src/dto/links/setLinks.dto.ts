@@ -19,4 +19,3 @@ export class SetLinksDTO {
   @ApiProperty({ description: 'User artstation' })
   artstation: string;
 }
-

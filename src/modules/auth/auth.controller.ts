@@ -6,9 +6,9 @@ import {
   Post,
   Body,
   UseInterceptors,
+  Get,
   // Delete,
   UseGuards,
-  Headers,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -24,7 +24,7 @@ export class AuthController {
   @Post('login')
   @UseInterceptors(FileInterceptor('formdata'))
   async loginUser(@Res() res, @Body() authDTO: any) {
-    console.log(authDTO)
+    console.log(authDTO);
     const userLog = await this.authService.loginUser(authDTO);
     return res.status(HttpStatus.OK).json(userLog);
   }
@@ -37,13 +37,10 @@ export class AuthController {
   //   return res.status(HttpStatus.OK).json(userReg);
   // }
 
-  @ApiOperation({ summary: 'Logout user' })
+  @ApiOperation({ summary: 'Check user token' })
   @UseGuards(AuthGuard)
-  @Post('logout')
-  @UseInterceptors(FileInterceptor('formdata'))
-  async logout(@Res() res, @Req() req) {
-    console.log(req.user)
-    // await this.authService.logout();
+  @Get('check')
+  async logout(@Res() res) {
     return res.status(HttpStatus.OK).json('ok');
   }
 

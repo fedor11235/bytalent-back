@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GetLegalDTO {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'User company name',
     required: true,
   })

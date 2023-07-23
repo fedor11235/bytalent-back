@@ -6,7 +6,9 @@ import {
   Post,
   Body,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from './../auth/auth.guard';
 import { ProfileService } from './profile.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
@@ -23,6 +25,7 @@ export class ProfileController {
     description: 'The record has been successfully created.',
     type: GetProfileDTO,
   })
+  @UseGuards(AuthGuard)
   @Get()
   async getProfileSettings(@Res() res) {
     const profileReq = await this.profileService.getProfileSettings();

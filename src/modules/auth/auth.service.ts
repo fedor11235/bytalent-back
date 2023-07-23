@@ -4,30 +4,27 @@ import { PrismaService } from '../prisma/prisma.service';
 import { User, Prisma } from '@prisma/client';
 
 type LoginPayload = {
-  login: string
-  password: string
-}
+  login: string;
+  password: string;
+};
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private prisma: PrismaService,
-    private jwtService: JwtService
-  ) {}
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
   async loginUser(payload: LoginPayload): Promise<any> {
     const user = await this.prisma.user.findFirst({
-      where: { email: payload.login }
+      where: { email: payload.login },
     });
     if (user) {
       return {
-        access_token: await this.jwtService.signAsync({sub: user.id}),
+        access_token: await this.jwtService.signAsync({ sub: user.id }),
       };
-    } 
-    const newUser =  await this.prisma.user.create({
-      data: { email: payload.login }
+    }
+    const newUser = await this.prisma.user.create({
+      data: { email: payload.login },
     });
     return {
-      access_token: await this.jwtService.signAsync({sub: newUser.id}),
+      access_token: await this.jwtService.signAsync({ sub: newUser.id }),
     };
   }
   async registryUser(payload: any): Promise<any> {

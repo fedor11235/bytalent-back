@@ -4,7 +4,7 @@ export class SetCommerceDTO {
   @ApiProperty({ description: 'User balance' })
   balance: number;
 
-  @ApiProperty({description: 'User invoice payments' })
+  @ApiProperty({ description: 'User invoice payments' })
   invoicePayments: string;
 
   @ApiProperty({ description: 'User operations history' })

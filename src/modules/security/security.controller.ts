@@ -6,7 +6,9 @@ import {
   Post,
   Body,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from './../auth/auth.guard';
 import { SecurityService } from './security.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
@@ -23,6 +25,7 @@ export class SecurityController {
     description: 'The record has been successfully created.',
     type: GetSecurityDTO,
   })
+  @UseGuards(AuthGuard)
   @Get()
   async getSecuritySettings(@Res() res) {
     const securityReq = await this.securityService.getSecuritySettings();

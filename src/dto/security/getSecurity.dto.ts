@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GetSecurityDTO {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'Type authorization',
     required: true,
   })
-  Authorization: String;
+  Authorization: string;
 
   @ApiProperty({
     description: 'Enabled 2FA',

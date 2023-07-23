@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GetProjectDTO {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'Project title',
     required: true,
   })
-  title: String;
+  title: string;
 
   @ApiProperty({
     description: 'Project text',

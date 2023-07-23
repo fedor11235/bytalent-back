@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GetCommerceDTO {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'User balance',
     required: true,
   })

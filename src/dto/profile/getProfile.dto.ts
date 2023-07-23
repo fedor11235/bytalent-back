@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GetProfileDTO {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'User name',
     required: true,
   })

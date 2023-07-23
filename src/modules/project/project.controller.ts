@@ -6,7 +6,9 @@ import {
   Post,
   Body,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from './../auth/auth.guard';
 import { ProjectService } from './project.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
@@ -23,6 +25,7 @@ export class ProjectController {
     description: 'The record has been successfully created.',
     type: GetProjectDTO,
   })
+  @UseGuards(AuthGuard)
   @Get('active')
   async getActiveProject(@Res() res) {
     const projectReq = await this.projectService.getActiveProject();

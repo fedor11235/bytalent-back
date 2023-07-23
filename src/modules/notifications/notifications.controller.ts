@@ -1,4 +1,5 @@
-import { Controller, Res, HttpStatus, Get } from '@nestjs/common';
+import { Controller, Res, HttpStatus, Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from './../auth/auth.guard';
 import { NotificationsService } from './notifications.service';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
 import { GetNotificationsDTO } from '../../dto/notification/getNotification.dto';
@@ -13,6 +14,7 @@ export class NotificationsController {
     description: 'The record has been successfully created.',
     type: GetNotificationsDTO,
   })
+  @UseGuards(AuthGuard)
   @Get()
   async getActiveProject(@Res() res) {
     const notificationsReq =

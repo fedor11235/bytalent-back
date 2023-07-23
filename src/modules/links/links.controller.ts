@@ -6,7 +6,9 @@ import {
   Post,
   Body,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from './../auth/auth.guard';
 import { LinksService } from './links.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
@@ -23,6 +25,7 @@ export class LinksController {
     description: 'The record has been successfully created.',
     type: GetLinksDTO,
   })
+  @UseGuards(AuthGuard)
   @Get()
   async getLinksSettings(@Res() res) {
     const linksReq = await this.linksService.getLinksSettings();
