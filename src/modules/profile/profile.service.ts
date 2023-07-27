@@ -5,9 +5,9 @@ import { User, Prisma } from '@prisma/client';
 @Injectable()
 export class ProfileService {
   constructor(private prisma: PrismaService) {}
-  async getProfileSettings(data: any): Promise<any> {
+  async getProfileSettings(dataUser: any): Promise<any> {
     const user = await this.prisma.user.findFirst({
-      where: { id: data.sub },
+      where: { id: dataUser.sub },
     });
     return {
       name: user.name,
@@ -18,7 +18,19 @@ export class ProfileService {
       email: user.email,
     };
   }
-  async setProfileSettings(payload: any): Promise<any> {
-    return true;
+  async setProfileSettings(dataUser: any, payload: any): Promise<User> {
+    const user = await this.prisma.user.update({
+      where: { id: dataUser.sub },
+      data: {
+        name: payload.name,
+        surname: payload.surname,
+        organization: payload.organization,
+        position: payload.position,
+        phone: payload.phone,
+        email: payload.email,
+      }
+    });
+    return user;
   }
 }
+

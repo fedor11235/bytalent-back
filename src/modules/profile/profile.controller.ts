@@ -34,10 +34,11 @@ export class ProfileController {
   }
 
   @ApiOperation({ summary: 'Set profile' })
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
-  async setProfileSettings(@Res() res, @Body() profileDTO: SetProfileDTO) {
-    const profileReq = await this.profileService.setProfileSettings(profileDTO);
+  async setProfileSettings(@Res() res, @Req() req, @Body() profileDTO: SetProfileDTO) {
+    const profileReq = await this.profileService.setProfileSettings(req.user, profileDTO);
     return res.status(HttpStatus.OK).json(profileReq);
   }
 }
