@@ -5,7 +5,17 @@ import { User, Prisma } from '@prisma/client';
 @Injectable()
 export class ProjectService {
   constructor(private prisma: PrismaService) {}
-  async getActiveProject(): Promise<any> {
-    return true;
+  async getActiveProjects(data: any): Promise<any> {
+    const user = await this.prisma.user.findFirst({
+      where: { id: data.sub },
+      include: {
+        projects: {
+          where: {active: true}
+        },
+      }
+    });
+    return {
+      projects: user.projects
+    };
   }
 }

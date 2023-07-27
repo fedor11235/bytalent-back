@@ -5,10 +5,19 @@ import { User, Prisma } from '@prisma/client';
 @Injectable()
 export class CommerceService {
   constructor(private prisma: PrismaService) {}
-  async getCommerceSettings(): Promise<any> {
-    return true;
+  async getCommerce(data: any): Promise<any> {
+    const user = await this.prisma.user.findFirst({
+      where: { id: data.sub },
+      include: {
+        invoicePayments: true
+      }
+    });
+    return {
+      balance: user.balance,
+      invoicePayments: user.invoicePayments
+    };
   }
-  async setCommerceSettings(payload: any): Promise<any> {
+  async setCommerce(payload: any): Promise<any> {
     return true;
   }
 }

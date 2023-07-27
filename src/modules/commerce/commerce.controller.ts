@@ -1,6 +1,7 @@
 import {
   Controller,
   Res,
+  Req,
   HttpStatus,
   Get,
   Post,
@@ -25,15 +26,15 @@ export class CommerceController {
   })
   @UseGuards(AuthGuard)
   @Get()
-  async getCommerceSettings(@Res() res) {
-    const commerceReq = await this.commerceService.getCommerceSettings();
+  async getCommerceSettings(@Res() res, @Req() req) {
+    const commerceReq = await this.commerceService.getCommerce(req.user);
     return res.status(HttpStatus.OK).json(commerceReq);
   }
 
   @ApiOperation({ summary: 'Set commerce' })
   @Post()
   async setCommerceSettings(@Res() res, @Body() commerceDTO: SetCommerceDTO) {
-    const commerceReq = await this.commerceService.setCommerceSettings(
+    const commerceReq = await this.commerceService.setCommerce(
       commerceDTO,
     );
     return res.status(HttpStatus.OK).json(commerceReq);

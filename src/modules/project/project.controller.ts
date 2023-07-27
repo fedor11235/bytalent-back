@@ -1,6 +1,7 @@
 import {
   Controller,
   Res,
+  Req,
   HttpStatus,
   Get,
   Post,
@@ -27,8 +28,8 @@ export class ProjectController {
   })
   @UseGuards(AuthGuard)
   @Get('active')
-  async getActiveProject(@Res() res) {
-    const projectReq = await this.projectService.getActiveProject();
+  async getActiveProjects(@Res() res, @Req() req) {
+    const projectReq = await this.projectService.getActiveProjects(req.user);
     return res.status(HttpStatus.OK).json(projectReq);
   }
 }
