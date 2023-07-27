@@ -1,4 +1,4 @@
-import { Controller, Res, HttpStatus, Get, UseGuards } from '@nestjs/common';
+import { Controller, Res, Req, HttpStatus, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from './../auth/auth.guard';
 import { NotificationsService } from './notifications.service';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
@@ -16,9 +16,9 @@ export class NotificationsController {
   })
   @UseGuards(AuthGuard)
   @Get()
-  async getActiveProject(@Res() res) {
+  async getAllNotifications(@Res() res, @Req() req) {
     const notificationsReq =
-      await this.notificationsService.getAllNotifications();
+      await this.notificationsService.getAllNotifications(req.user);
     return res.status(HttpStatus.OK).json(notificationsReq);
   }
 }
