@@ -34,9 +34,7 @@ export class CommerceController {
   @ApiOperation({ summary: 'Set commerce' })
   @Post()
   async setCommerceSettings(@Res() res, @Body() commerceDTO: SetCommerceDTO) {
-    const commerceReq = await this.commerceService.setCommerce(
-      commerceDTO,
-    );
+    const commerceReq = await this.commerceService.setCommerce(commerceDTO);
     return res.status(HttpStatus.OK).json(commerceReq);
   }
 }

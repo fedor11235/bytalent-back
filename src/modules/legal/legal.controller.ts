@@ -1,6 +1,7 @@
 import {
   Controller,
   Res,
+  Req,
   HttpStatus,
   Get,
   Post,
@@ -27,8 +28,8 @@ export class LegalController {
   })
   @UseGuards(AuthGuard)
   @Get()
-  async getLegalSettings(@Res() res) {
-    const LegalReq = await this.legalService.getLegalSettings();
+  async getLegalSettings(@Res() res, @Req() req) {
+    const LegalReq = await this.legalService.getLegalSettings(req.user);
     return res.status(HttpStatus.OK).json(LegalReq);
   }
 

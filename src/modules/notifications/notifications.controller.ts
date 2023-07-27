@@ -1,4 +1,11 @@
-import { Controller, Res, Req, HttpStatus, Get, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Res,
+  Req,
+  HttpStatus,
+  Get,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from './../auth/auth.guard';
 import { NotificationsService } from './notifications.service';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';

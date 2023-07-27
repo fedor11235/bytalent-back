@@ -1,6 +1,7 @@
 import {
   Controller,
   Res,
+  Req,
   HttpStatus,
   Get,
   Post,
@@ -27,8 +28,8 @@ export class ProfileController {
   })
   @UseGuards(AuthGuard)
   @Get()
-  async getProfileSettings(@Res() res) {
-    const profileReq = await this.profileService.getProfileSettings();
+  async getProfileSettings(@Res() res, @Req() req) {
+    const profileReq = await this.profileService.getProfileSettings(req.user);
     return res.status(HttpStatus.OK).json(profileReq);
   }
 

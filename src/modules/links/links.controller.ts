@@ -1,6 +1,7 @@
 import {
   Controller,
   Res,
+  Req,
   HttpStatus,
   Get,
   Post,
@@ -27,8 +28,8 @@ export class LinksController {
   })
   @UseGuards(AuthGuard)
   @Get()
-  async getLinksSettings(@Res() res) {
-    const linksReq = await this.linksService.getLinksSettings();
+  async getLinksSettings(@Res() res, @Req() req) {
+    const linksReq = await this.linksService.getLinksSettings(req.user);
     return res.status(HttpStatus.OK).json(linksReq);
   }
 

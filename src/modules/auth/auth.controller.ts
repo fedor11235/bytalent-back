@@ -24,7 +24,6 @@ export class AuthController {
   @Post('login')
   @UseInterceptors(FileInterceptor('formdata'))
   async loginUser(@Res() res, @Body() authDTO: any) {
-    console.log(authDTO);
     const userLog = await this.authService.loginUser(authDTO);
     return res.status(HttpStatus.OK).json(userLog);
   }

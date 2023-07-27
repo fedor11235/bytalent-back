@@ -10,12 +10,12 @@ export class ProjectService {
       where: { id: data.sub },
       include: {
         projects: {
-          where: {active: true}
+          where: { active: true },
         },
-      }
+      },
     });
     return {
-      projects: user.projects
+      projects: user.projects,
     };
   }
 }

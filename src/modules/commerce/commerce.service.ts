@@ -9,12 +9,14 @@ export class CommerceService {
     const user = await this.prisma.user.findFirst({
       where: { id: data.sub },
       include: {
-        invoicePayments: true
-      }
+        invoicePayments: true,
+        operationsHistory: true,
+      },
     });
     return {
       balance: user.balance,
-      invoicePayments: user.invoicePayments
+      invoicePayments: user.invoicePayments,
+      operationsHistory: user.operationsHistory,
     };
   }
   async setCommerce(payload: any): Promise<any> {

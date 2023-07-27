@@ -1,6 +1,7 @@
 import {
   Controller,
   Res,
+  Req,
   HttpStatus,
   Get,
   Post,
@@ -27,8 +28,10 @@ export class SecurityController {
   })
   @UseGuards(AuthGuard)
   @Get()
-  async getSecuritySettings(@Res() res) {
-    const securityReq = await this.securityService.getSecuritySettings();
+  async getSecuritySettings(@Res() res, @Req() req) {
+    const securityReq = await this.securityService.getSecuritySettings(
+      req.user,
+    );
     return res.status(HttpStatus.OK).json(securityReq);
   }
 

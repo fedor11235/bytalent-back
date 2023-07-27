@@ -9,11 +9,11 @@ export class NotificationsService {
     const user = await this.prisma.user.findFirst({
       where: { id: data.sub },
       include: {
-        notifications: true
-      }
+        notifications: true,
+      },
     });
     return {
-      notifications: user.notifications
+      notifications: user.notifications,
     };
   }
 }
