@@ -37,8 +37,15 @@ export class ProfileController {
   @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
-  async setProfileSettings(@Res() res, @Req() req, @Body() profileDTO: SetProfileDTO) {
-    const profileReq = await this.profileService.setProfileSettings(req.user, profileDTO);
+  async setProfileSettings(
+    @Res() res,
+    @Req() req,
+    @Body() profileDTO: SetProfileDTO,
+  ) {
+    const profileReq = await this.profileService.setProfileSettings(
+      req.user,
+      profileDTO,
+    );
     return res.status(HttpStatus.OK).json(profileReq);
   }
 }

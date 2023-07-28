@@ -34,10 +34,18 @@ export class LinksController {
   }
 
   @ApiOperation({ summary: 'Set links' })
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
-  async setLinksSettings(@Res() res, @Body() linksDTO: SetLinksDTO) {
-    const linksReq = await this.linksService.setLinksSettings(linksDTO);
+  async setLinksSettings(
+    @Res() res,
+    @Req() req,
+    @Body() linksDTO: SetLinksDTO,
+  ) {
+    const linksReq = await this.linksService.setLinksSettings(
+      req.user,
+      linksDTO,
+    );
     return res.status(HttpStatus.OK).json(linksReq);
   }
 }

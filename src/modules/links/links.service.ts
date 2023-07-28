@@ -5,9 +5,9 @@ import { User, Prisma } from '@prisma/client';
 @Injectable()
 export class LinksService {
   constructor(private prisma: PrismaService) {}
-  async getLinksSettings(data: any): Promise<any> {
+  async getLinksSettings(dataUser: any): Promise<any> {
     const user = await this.prisma.user.findFirst({
-      where: { id: data.sub },
+      where: { id: dataUser.sub },
     });
     return {
       website: user.Website,
@@ -18,7 +18,18 @@ export class LinksService {
       artstation: user.Artstation,
     };
   }
-  async setLinksSettings(payload: any): Promise<any> {
-    return true;
+  async setLinksSettings(dataUser: any, payload: any): Promise<any> {
+    const user = await this.prisma.user.update({
+      where: { id: dataUser.sub },
+      data: {
+        Website: payload.website,
+        Telegram: payload.telegram,
+        Instagram: payload.instagram,
+        Twitter: payload.twitter,
+        Behance: payload.behance,
+        Artstation: payload.artstation,
+      },
+    });
+    return user;
   }
 }

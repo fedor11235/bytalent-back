@@ -34,10 +34,18 @@ export class LegalController {
   }
 
   @ApiOperation({ summary: 'Set legal' })
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
-  async setLegalSettings(@Res() res, @Body() legalDTO: SetLegalDTO) {
-    const LegalReq = await this.legalService.setLegalSettings(legalDTO);
+  async setLegalSettings(
+    @Res() res,
+    @Req() req,
+    @Body() legalDTO: SetLegalDTO,
+  ) {
+    const LegalReq = await this.legalService.setLegalSettings(
+      req.user,
+      legalDTO,
+    );
     return res.status(HttpStatus.OK).json(LegalReq);
   }
 }

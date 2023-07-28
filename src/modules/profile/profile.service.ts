@@ -28,9 +28,8 @@ export class ProfileService {
         position: payload.position,
         phone: payload.phone,
         email: payload.email,
-      }
+      },
     });
     return user;
   }
 }
-

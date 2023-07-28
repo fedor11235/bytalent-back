@@ -5,20 +5,31 @@ import { User, Prisma } from '@prisma/client';
 @Injectable()
 export class LegalService {
   constructor(private prisma: PrismaService) {}
-  async getLegalSettings(data: any): Promise<any> {
+  async getLegalSettings(dataUser: any): Promise<any> {
     const user = await this.prisma.user.findFirst({
-      where: { id: data.sub },
+      where: { id: dataUser.sub },
     });
     return {
       companyName: user.companyName,
       organizationalForms: user.organizationalForms,
-      OGRN: user.OGRN,
-      INN: user.INN,
-      BankBIC: user.BankBIC,
-      CheckingAccount: user.CheckingAccount,
+      oGRN: user.OGRN,
+      iNN: user.INN,
+      bankBIC: user.BankBIC,
+      checkingAccount: user.CheckingAccount,
     };
   }
-  async setLegalSettings(payload: any): Promise<any> {
-    return true;
+  async setLegalSettings(dataUser: any, payload: any): Promise<any> {
+    const user = await this.prisma.user.update({
+      where: { id: dataUser.sub },
+      data: {
+        companyName: payload.companyName,
+        organizationalForms: payload.organizationalForms,
+        OGRN: payload.oGRN,
+        INN: payload.iNN,
+        BankBIC: payload.bankBIC,
+        CheckingAccount: payload.checkingAccount,
+      },
+    });
+    return user;
   }
 }
