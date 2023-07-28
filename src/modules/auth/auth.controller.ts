@@ -12,8 +12,9 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from './auth.guard';
+import { testAuthDTO } from '../../dto/auth/testAuth.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -23,7 +24,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Login user' })
   @Post('login')
   @UseInterceptors(FileInterceptor('formdata'))
-  async loginUser(@Res() res, @Body() authDTO: any) {
+  async loginUser(@Res() res, @Body() authDTO: testAuthDTO) {
     const userLog = await this.authService.loginUser(authDTO);
     return res.status(HttpStatus.OK).json(userLog);
   }
@@ -37,6 +38,7 @@ export class AuthController {
   // }
 
   @ApiOperation({ summary: 'Check user token' })
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('check')
   async logout(@Res() res) {

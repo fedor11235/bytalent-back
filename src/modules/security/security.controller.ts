@@ -12,7 +12,12 @@ import {
 import { AuthGuard } from './../auth/auth.guard';
 import { SecurityService } from './security.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { GetSecurityDTO } from '../../dto/security/getSecurity.dto';
 import { SetSecurityDTO } from '../../dto/security/setSecurity.dto';
 
@@ -22,6 +27,7 @@ export class SecurityController {
   constructor(private securityService: SecurityService) {}
 
   @ApiOperation({ summary: 'Get security' })
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: GetSecurityDTO,
@@ -36,6 +42,7 @@ export class SecurityController {
   }
 
   @ApiOperation({ summary: 'Set security' })
+  @ApiBearerAuth()
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
   async setSecuritySettings(@Res() res, @Body() securityDTO: SetSecurityDTO) {

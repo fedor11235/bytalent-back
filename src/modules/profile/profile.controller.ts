@@ -12,7 +12,12 @@ import {
 import { AuthGuard } from './../auth/auth.guard';
 import { ProfileService } from './profile.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { GetProfileDTO } from '../../dto/profile/getProfile.dto';
 import { SetProfileDTO } from '../../dto/profile/setProfile.dto';
 
@@ -22,6 +27,7 @@ export class ProfileController {
   constructor(private profileService: ProfileService) {}
 
   @ApiOperation({ summary: 'Get profile' })
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: GetProfileDTO,
@@ -34,6 +40,7 @@ export class ProfileController {
   }
 
   @ApiOperation({ summary: 'Set profile' })
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))

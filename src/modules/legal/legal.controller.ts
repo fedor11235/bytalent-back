@@ -12,7 +12,12 @@ import {
 import { AuthGuard } from './../auth/auth.guard';
 import { LegalService } from './legal.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { GetLegalDTO } from '../../dto/legal/getLegal.dto';
 import { SetLegalDTO } from '../../dto/legal/setLegal.dto';
 
@@ -22,6 +27,7 @@ export class LegalController {
   constructor(private legalService: LegalService) {}
 
   @ApiOperation({ summary: 'Get legal' })
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'Successfully',
     type: GetLegalDTO,
@@ -34,6 +40,7 @@ export class LegalController {
   }
 
   @ApiOperation({ summary: 'Set legal' })
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))

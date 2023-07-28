@@ -12,7 +12,12 @@ import {
 import { AuthGuard } from './../auth/auth.guard';
 import { LinksService } from './links.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { GetLinksDTO } from '../../dto/links/getLinks.dto';
 import { SetLinksDTO } from '../../dto/links/setLinks.dto';
 
@@ -22,6 +27,7 @@ export class LinksController {
   constructor(private linksService: LinksService) {}
 
   @ApiOperation({ summary: 'Get links' })
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: GetLinksDTO,
@@ -34,6 +40,7 @@ export class LinksController {
   }
 
   @ApiOperation({ summary: 'Set links' })
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))

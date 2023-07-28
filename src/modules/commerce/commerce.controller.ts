@@ -10,7 +10,12 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from './../auth/auth.guard';
 import { CommerceService } from './commerce.service';
-import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { GetCommerceDTO } from '../../dto/commerce/getCommerce.dto';
 import { SetCommerceDTO } from '../../dto/commerce/setCommerce.dto';
 
@@ -20,6 +25,7 @@ export class CommerceController {
   constructor(private commerceService: CommerceService) {}
 
   @ApiOperation({ summary: 'Get commerce' })
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'Successfully',
     type: GetCommerceDTO,
@@ -32,6 +38,7 @@ export class CommerceController {
   }
 
   @ApiOperation({ summary: 'Set commerce' })
+  @ApiBearerAuth()
   @Post()
   async setCommerceSettings(@Res() res, @Body() commerceDTO: SetCommerceDTO) {
     const commerceReq = await this.commerceService.setCommerce(commerceDTO);

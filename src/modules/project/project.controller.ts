@@ -12,7 +12,12 @@ import {
 import { AuthGuard } from './../auth/auth.guard';
 import { ProjectService } from './project.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { GetProjectDTO } from '../../dto/project/getProject.dto';
 import { SetProjectDTO } from '../../dto/project/setProject.dto';
 import { OrderVisualizationDTO } from '../../dto/project/orderVisualization.dto';
@@ -23,6 +28,7 @@ export class ProjectController {
   constructor(private projectService: ProjectService) {}
 
   @ApiOperation({ summary: 'Get active project' })
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: GetProjectDTO,
@@ -35,6 +41,7 @@ export class ProjectController {
   }
 
   @ApiOperation({ summary: 'Order visualization' })
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Post('order')
   @UseInterceptors(FileInterceptor('formdata'))

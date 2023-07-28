@@ -8,7 +8,12 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from './../auth/auth.guard';
 import { NotificationsService } from './notifications.service';
-import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { GetNotificationsDTO } from '../../dto/notification/getNotification.dto';
 
 @ApiTags('Notifications')
@@ -17,6 +22,7 @@ export class NotificationsController {
   constructor(private notificationsService: NotificationsService) {}
 
   @ApiOperation({ summary: 'Get all notifications' })
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: GetNotificationsDTO,

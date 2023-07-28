@@ -7,6 +7,7 @@ async function bootstrap() {
   app.enableCors();
 
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('byTalent API')
     .setDescription('The byTalent API description')
     .setVersion('0.1')
