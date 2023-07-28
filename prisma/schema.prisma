@@ -68,6 +68,8 @@ model Project {
   id          Int      @default(autoincrement()) @id
   title       String
   text        String
+  // address     String
+  // type        String
   description String
   active      Boolean
   author      User?    @relation(fields: [authorId], references: [id])
