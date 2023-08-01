@@ -2,7 +2,6 @@ import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import * as fs from 'fs';
-import path from 'path';
 import { User, Prisma } from '@prisma/client';
 
 const PATH_BACKGROUNDS = 'media/backgrounds/';

@@ -56,4 +56,13 @@ export class ProjectController {
     );
     return res.status(HttpStatus.OK).json(projectReq);
   }
+
+  @ApiOperation({ summary: 'Get backgrounds' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Get('backgrounds')
+  async getBackgrounds(@Res() res, @Req() req) {
+    const projectReq = await this.projectService.getBackgrounds(req.user);
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
 }
