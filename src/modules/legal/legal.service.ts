@@ -10,24 +10,24 @@ export class LegalService {
       where: { id: dataUser.sub },
     });
     return {
-      companyName: user.companyName,
-      organizationalForms: user.organizationalForms,
-      oGRN: user.OGRN,
-      iNN: user.INN,
-      bankBIC: user.BankBIC,
-      checkingAccount: user.CheckingAccount,
+      companyName: user.company_name,
+      organizationalForms: user.organizational_forms,
+      oGRN: user.ogrn,
+      iNN: user.inn,
+      bankBIC: user.bank_bic,
+      checkingAccount: user.checking_account,
     };
   }
   async setLegalSettings(dataUser: any, payload: any): Promise<any> {
     const user = await this.prisma.user.update({
       where: { id: dataUser.sub },
       data: {
-        companyName: payload.companyName,
-        organizationalForms: payload.organizationalForms,
-        OGRN: payload.oGRN,
-        INN: payload.iNN,
-        BankBIC: payload.bankBIC,
-        CheckingAccount: payload.checkingAccount,
+        company_name: payload.companyName,
+        organizational_forms: payload.organizationalForms,
+        ogrn: payload.oGRN,
+        inn: payload.iNN,
+        bank_bic: payload.bankBIC,
+        checking_account: payload.checkingAccount,
       },
     });
     return user;

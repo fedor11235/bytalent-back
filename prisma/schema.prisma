@@ -14,64 +14,80 @@ model User {
   id    Int     @default(autoincrement()) @id
   name  String?
   surname  String?
-  organization  String?
+  organization String?
   position  String?
   phone  String?
   email String?
   balance Int?
-  companyName String?
-  organizationalForms String?
-  OGRN String?
-  INN String?
-  BankBIC String?
-  CheckingAccount String?
-  Website String?
-  Telegram String?
-  Instagram String?
-  Twitter String?
-  Behance String?
-  Artstation String?
-  Authorization String?
-  twoFA String?
-  invoicePayments invoicePayment[]
-  operationsHistory Operation[]
+  company_name String?
+  organizational_forms String?
+  ogrn String?
+  inn String?
+  bank_bic String?
+  checking_account String?
+  website String?
+  telegram String?
+  instagram String?
+  twitter String?
+  behance Int @default(0)
+  artstation String?
+  authorization String?
+  two_fa String?
+  backgrounds Backgrounds[]
   projects Project[]
   notifications Notification[]
 }
 
-model invoicePayment {
-  id          Int      @default(autoincrement()) @id
-  number      String
-  text        String
-  date        DateTime
-  recipient   User?    @relation(fields: [recipientId], references: [id])
-  recipientId Int?
-}
-
-model Operation {
-  id          Int      @default(autoincrement()) @id
-  text        String
-  date        DateTime
-  recipient   User?    @relation(fields: [recipientId], references: [id])
-  recipientId Int?
-}
-
 model Notification {
-  id          Int      @default(autoincrement()) @id
-  text        String
-  date        DateTime
-  recipient   User?    @relation(fields: [recipientId], references: [id])
-  recipientId Int?
+  id           Int      @default(autoincrement()) @id
+  text         String?
+  date         DateTime?
+  type         String?
+  recipient    User?    @relation(fields: [recipient_id], references: [id])
+  recipient_id Int?
 }
 
 model Project {
-  id          Int      @default(autoincrement()) @id
-  title       String
-  text        String
-  // address     String
-  // type        String
-  description String
-  active      Boolean
-  author      User?    @relation(fields: [authorId], references: [id])
-  authorId    Int?
+  id          Int     @default(autoincrement()) @id
+  type        String?
+  class       String?
+  name        String?
+  address     String?
+  info        String?
+  images      String?
+  files       String?
+  city        String?
+  background  Backgrounds?
+  links       String?
+  status      String  @default("add_information")
+  comments    String?
+  likes       Int?
+  author      User?    @relation(fields: [author_id], references: [id])
+  author_id   Int?
 }
+
+model Backgrounds {
+  id          Int      @default(autoincrement()) @id
+  path        String
+  author      User?    @relation(fields: [author_id], references: [id])
+  author_id   Int?
+  project     Project? @relation(fields: [project_id], references: [id])
+  project_id  Int? @unique
+}
+
+// статусы проекта
+// 1) Добавление информации add_information
+// 2) Проверка (модерация)  moderation
+// 3) Готов к использованию ready_to_use
+// 4) Размещён в приложении hosted_app
+// 5) Размещён в стриминге  hosted_streaming
+
+// поле авторизации
+// 1) telegram
+// 2) apple
+// 3) phone
+
+// типы уведомлений
+// 1) active_projects
+// 2) operation_history
+// 3) invoice_payments

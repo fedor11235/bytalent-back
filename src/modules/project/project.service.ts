@@ -10,7 +10,7 @@ export class ProjectService {
       where: { id: dataUser.sub },
       include: {
         projects: {
-          where: { active: true },
+          where: { status: 'active' },
         },
       },
     });
@@ -21,13 +21,10 @@ export class ProjectService {
   async orderVisualization(dataUser: any, payload: any): Promise<any> {
     return this.prisma.project.create({
       data: {
-        title: payload.title,
-        text: '',
-        description: '',
-        active: false,
-        authorId: dataUser.sub,
-        // address: payload.address,
-        // type: payload.type
+        name: payload.title,
+        author_id: dataUser.sub,
+        address: payload.address,
+        type: payload.type
       },
     });
   }
