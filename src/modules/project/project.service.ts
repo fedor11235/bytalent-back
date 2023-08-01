@@ -24,7 +24,7 @@ export class ProjectService {
         name: payload.title,
         author_id: dataUser.sub,
         address: payload.address,
-        type: payload.type
+        type: payload.type,
       },
     });
   }

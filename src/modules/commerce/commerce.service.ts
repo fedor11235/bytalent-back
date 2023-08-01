@@ -10,14 +10,18 @@ export class CommerceService {
       where: { id: data.sub },
       include: {
         notifications: {
-          where: { type: 'operation_history' || 'invoice_payments' }
-        }
+          where: { type: 'operation_history' || 'invoice_payments' },
+        },
       },
     });
     return {
       balance: user.balance,
-      invoicePayments: user.notifications.find(notification => notification.type === 'invoice_payments'),
-      operationsHistory: user.notifications.find(notification => notification.type === 'operation_history'),
+      invoicePayments: user.notifications.find(
+        (notification) => notification.type === 'invoice_payments',
+      ),
+      operationsHistory: user.notifications.find(
+        (notification) => notification.type === 'operation_history',
+      ),
     };
   }
   async setCommerce(payload: any): Promise<any> {
