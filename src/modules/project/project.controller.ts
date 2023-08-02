@@ -5,9 +5,12 @@ import {
   HttpStatus,
   Get,
   Post,
+  Delete,
   Body,
   UseInterceptors,
   UseGuards,
+  Param,
+  UploadedFile,
 } from '@nestjs/common';
 import { AuthGuard } from './../auth/auth.guard';
 import { ProjectService } from './project.service';
@@ -17,9 +20,12 @@ import {
   ApiOperation,
   ApiCreatedResponse,
   ApiBearerAuth,
+  ApiConsumes,
 } from '@nestjs/swagger';
 import { GetProjectDTO } from '../../dto/project/getProject.dto';
 import { SetProjectDTO } from '../../dto/project/setProject.dto';
+import { PostBackgroundDTO } from '../../dto/project/postBackground.dto';
+import { DeleteProjectDTO } from '../../dto/project/deleteProject.dto';
 import { OrderVisualizationDTO } from '../../dto/project/orderVisualization.dto';
 
 @ApiTags('Project')
@@ -63,6 +69,34 @@ export class ProjectController {
   @Get('backgrounds')
   async getBackgrounds(@Res() res, @Req() req) {
     const projectReq = await this.projectService.getBackgrounds(req.user);
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
+  @ApiOperation({ summary: 'Post background' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  @Post('backgrounds')
+  async postBackgrounds(
+    @Res() res,
+    @Req() req,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() payload: PostBackgroundDTO,
+  ) {
+    const projectReq = await this.projectService.postBackgrounds(
+      req.user,
+      file,
+    );
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
+  @ApiOperation({ summary: 'Delete background' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Delete('backgrounds/:id')
+  async deleteBackgrounds(@Res() res, @Param() params: DeleteProjectDTO) {
+    const projectReq = await this.projectService.deleteBackgrounds(
+      Number(params.id),
+    );
     return res.status(HttpStatus.OK).json(projectReq);
   }
 }

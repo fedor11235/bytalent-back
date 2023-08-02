@@ -23,16 +23,14 @@ export class AuthService {
       data: { email: payload.login },
     });
 
-    const files = fs.readdirSync(PATH_BACKGROUNDS);
     const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
 
-    let filesCount = files.length;
     for (const index in filesDefault) {
       const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
-      const imagesPathFileWrite = PATH_BACKGROUNDS + `${filesCount}.jpeg`;
+      const imagesPathFileWrite =
+        PATH_BACKGROUNDS + `${new Date().valueOf()}.jpeg`;
       const img = fs.readFileSync(imagesPathFileRead);
       fs.writeFileSync(imagesPathFileWrite, img);
-      filesCount += 1;
       await this.prisma.backgrounds.create({
         data: {
           path: imagesPathFileWrite,

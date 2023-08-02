@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import * as fs from 'fs';
 import { User, Prisma } from '@prisma/client';
 
+const PATH_BACKGROUNDS = 'media/backgrounds/';
+
 @Injectable()
 export class ProjectService {
   constructor(private prisma: PrismaService) {}
@@ -26,22 +28,39 @@ export class ProjectService {
         backgrounds: true,
       },
     });
-
-    const backgrounds = []
-
-    for(const background of user.backgrounds) {
+    const backgrounds = [];
+    for (const background of user.backgrounds) {
       const buffer = fs.readFileSync(background.path);
       const b64 = Buffer.from(buffer).toString('base64');
-      const mimeType = 'image/png'
-      backgrounds.push(`data:${mimeType};base64,${b64}`)
+      const mimeType = 'image/png';
+      backgrounds.push({
+        id: background.id,
+        img: `data:${mimeType};base64,${b64}`,
+      });
     }
-
     return {
-      backgrounds: backgrounds
-    }
-    // return {
-    //   notifications: user.notifications,
-    // };
+      backgrounds: backgrounds,
+    };
+  }
+  async postBackgrounds(dataUser: any, payload: any): Promise<any> {
+    const format = payload.mimetype.split('/')[1];
+    const imagesPathFileWrite =
+      PATH_BACKGROUNDS + `${new Date().valueOf()}.${format}`;
+    fs.writeFileSync(imagesPathFileWrite, payload.buffer);
+    const background = await this.prisma.backgrounds.create({
+      data: {
+        path: imagesPathFileWrite,
+        author_id: dataUser.sub,
+      },
+    });
+    return background;
+  }
+  async deleteBackgrounds(id: number): Promise<any> {
+    const background = await this.prisma.backgrounds.delete({
+      where: { id: id },
+    });
+    fs.unlinkSync(background.path);
+    return background;
   }
   async orderVisualization(dataUser: any, payload: any): Promise<any> {
     return this.prisma.project.create({
