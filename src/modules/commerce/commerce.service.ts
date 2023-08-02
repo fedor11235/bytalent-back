@@ -10,16 +10,21 @@ export class CommerceService {
       where: { id: data.sub },
       include: {
         notifications: {
-          where: { type: 'operation_history' || 'invoice_payments' },
+          where: {
+            OR: [
+              { type: 'operation_history' },
+              { type: 'invoice_payments' },
+            ],
+          }
         },
       },
     });
     return {
       balance: user.balance,
-      invoicePayments: user.notifications.find(
+      invoicePayments: user.notifications.filter(
         (notification) => notification.type === 'invoice_payments',
       ),
-      operationsHistory: user.notifications.find(
+      operationsHistory: user.notifications.filter(
         (notification) => notification.type === 'operation_history',
       ),
     };

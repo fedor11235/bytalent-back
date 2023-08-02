@@ -28,8 +28,9 @@ CREATE TABLE "User" (
 CREATE TABLE "Notification" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "text" TEXT,
-    "date" DATETIME,
+    "date" DATETIME DEFAULT CURRENT_TIMESTAMP,
     "type" TEXT,
+    "status" TEXT NOT NULL,
     "recipient_id" INTEGER,
     CONSTRAINT "Notification_recipient_id_fkey" FOREIGN KEY ("recipient_id") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -46,7 +47,7 @@ CREATE TABLE "Project" (
     "files" TEXT,
     "city" TEXT,
     "links" TEXT,
-    "status" TEXT NOT NULL DEFAULT 'add_information',
+    "status" TEXT DEFAULT 'add_information',
     "comments" TEXT,
     "likes" INTEGER,
     "author_id" INTEGER,
@@ -63,5 +64,21 @@ CREATE TABLE "Backgrounds" (
     CONSTRAINT "Backgrounds_project_id_fkey" FOREIGN KEY ("project_id") REFERENCES "Project" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+-- CreateTable
+CREATE TABLE "Order" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "personal_assistant" TEXT NOT NULL,
+    "technical_requirements" TEXT NOT NULL,
+    "placement_rules" TEXT NOT NULL,
+    "integration" TEXT NOT NULL,
+    "author_id" INTEGER,
+    "project_id" INTEGER,
+    CONSTRAINT "Order_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT "Order_project_id_fkey" FOREIGN KEY ("project_id") REFERENCES "Project" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Backgrounds_project_id_key" ON "Backgrounds"("project_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Order_project_id_key" ON "Order"("project_id");

@@ -18,7 +18,7 @@ model User {
   position  String?
   phone  String?
   email String?
-  balance Int?
+  balance Int? @default(0)
   company_name String?
   organizational_forms String?
   ogrn String?
@@ -29,10 +29,11 @@ model User {
   telegram String?
   instagram String?
   twitter String?
-  behance Int @default(0)
+  behance String?
   artstation String?
   authorization String?
   two_fa String?
+  order Order[]
   backgrounds Backgrounds[]
   projects Project[]
   notifications Notification[]
@@ -41,8 +42,9 @@ model User {
 model Notification {
   id           Int      @default(autoincrement()) @id
   text         String?
-  date         DateTime?
+  date         DateTime? @default(now())
   type         String?
+  status       String
   recipient    User?    @relation(fields: [recipient_id], references: [id])
   recipient_id Int?
 }
@@ -59,11 +61,12 @@ model Project {
   city        String?
   background  Backgrounds?
   links       String?
-  status      String  @default("add_information")
+  status      String?  @default("add_information")
   comments    String?
   likes       Int?
   author      User?    @relation(fields: [author_id], references: [id])
   author_id   Int?
+  order Order?
 }
 
 model Backgrounds {
@@ -73,6 +76,18 @@ model Backgrounds {
   author_id   Int?
   project     Project? @relation(fields: [project_id], references: [id])
   project_id  Int? @unique
+}
+
+model Order {
+  id                        Int      @default(autoincrement()) @id
+  personal_assistant        String
+  technical_requirements    String
+  placement_rules           String
+  integration               String
+  author                    User?    @relation(fields: [author_id], references: [id])
+  author_id                 Int?
+  project                   Project? @relation(fields: [project_id], references: [id])
+  project_id                Int? @unique
 }
 
 // статусы проекта
@@ -91,3 +106,10 @@ model Backgrounds {
 // 1) active_projects
 // 2) operation_history
 // 3) invoice_payments
+
+// типы проекта
+// 1) жилой комплекс residential_complex
+// 2) коттеджный посёлок cottage_village
+// 3) частный дом private_house
+// 4) музей/галерея museum_gallery
+// 5) прочее other

@@ -12,13 +12,13 @@ export class ProjectService {
     const user = await this.prisma.user.findFirst({
       where: { id: dataUser.sub },
       include: {
-        projects: {
-          where: { status: 'active' },
+        notifications: {
+          where: { type: 'active_projects' },
         },
       },
     });
     return {
-      projects: user.projects,
+      projects: user.notifications,
     };
   }
   async getBackgrounds(dataUser: any): Promise<any> {
