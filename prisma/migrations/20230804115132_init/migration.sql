@@ -7,7 +7,7 @@ CREATE TABLE "User" (
     "position" TEXT,
     "phone" TEXT,
     "email" TEXT,
-    "balance" INTEGER,
+    "balance" INTEGER DEFAULT 0,
     "company_name" TEXT,
     "organizational_forms" TEXT,
     "ogrn" TEXT,
@@ -18,7 +18,7 @@ CREATE TABLE "User" (
     "telegram" TEXT,
     "instagram" TEXT,
     "twitter" TEXT,
-    "behance" INTEGER NOT NULL DEFAULT 0,
+    "behance" TEXT,
     "artstation" TEXT,
     "authorization" TEXT,
     "two_fa" TEXT
@@ -44,7 +44,6 @@ CREATE TABLE "Project" (
     "address" TEXT,
     "info" TEXT,
     "images" TEXT,
-    "files" TEXT,
     "city" TEXT,
     "links" TEXT,
     "status" TEXT DEFAULT 'add_information',
@@ -65,6 +64,14 @@ CREATE TABLE "Backgrounds" (
 );
 
 -- CreateTable
+CREATE TABLE "Files" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "path" TEXT NOT NULL,
+    "project_id" INTEGER,
+    CONSTRAINT "Files_project_id_fkey" FOREIGN KEY ("project_id") REFERENCES "Project" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
 CREATE TABLE "Order" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "personal_assistant" TEXT NOT NULL,
@@ -79,6 +86,9 @@ CREATE TABLE "Order" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Backgrounds_project_id_key" ON "Backgrounds"("project_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Files_project_id_key" ON "Files"("project_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Order_project_id_key" ON "Order"("project_id");

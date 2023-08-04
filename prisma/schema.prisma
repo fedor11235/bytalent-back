@@ -57,7 +57,7 @@ model Project {
   address     String?
   info        String?
   images      String?
-  files       String?
+  files       Files?
   city        String?
   background  Backgrounds?
   links       String?
@@ -74,6 +74,13 @@ model Backgrounds {
   path        String
   author      User?    @relation(fields: [author_id], references: [id])
   author_id   Int?
+  project     Project? @relation(fields: [project_id], references: [id])
+  project_id  Int? @unique
+}
+
+model Files {
+  id          Int      @default(autoincrement()) @id
+  path        String
   project     Project? @relation(fields: [project_id], references: [id])
   project_id  Int? @unique
 }

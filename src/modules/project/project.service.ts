@@ -21,6 +21,13 @@ export class ProjectService {
       projects: user.notifications,
     };
   }
+  async uploadFileProject(
+    dataUser: any,
+    projectId: any,
+    payload: any,
+  ): Promise<any> {
+    return 'ok';
+  }
   async getBackgrounds(dataUser: any): Promise<any> {
     const user = await this.prisma.user.findFirst({
       where: { id: dataUser.sub },

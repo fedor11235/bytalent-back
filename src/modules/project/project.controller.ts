@@ -25,8 +25,10 @@ import {
 import { GetProjectDTO } from '../../dto/project/getProject.dto';
 import { SetProjectDTO } from '../../dto/project/setProject.dto';
 import { PostBackgroundDTO } from '../../dto/project/postBackground.dto';
+import { UploadFileProjectDTO } from '../../dto/project/uploadFileProject.dto';
 import { DeleteProjectDTO } from '../../dto/project/deleteProject.dto';
 import { OrderVisualizationDTO } from '../../dto/project/orderVisualization.dto';
+import { ParamsFileProjectDTO } from '../../dto/project/paramsFileProject.dto';
 
 @ApiTags('Project')
 @Controller('project')
@@ -62,7 +64,26 @@ export class ProjectController {
     );
     return res.status(HttpStatus.OK).json(projectReq);
   }
-
+  @ApiOperation({ summary: 'Upload file project' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  @Post('upload/:id')
+  async uploadFileProject(
+    @Res() res,
+    @Req() req,
+    @UploadedFile() file: Express.Multer.File,
+    @Param() params: ParamsFileProjectDTO,
+    @Body() payload: UploadFileProjectDTO,
+  ) {
+    const projectReq = await this.projectService.uploadFileProject(
+      req.user,
+      params.id,
+      file,
+    );
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
   @ApiOperation({ summary: 'Get backgrounds' })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)

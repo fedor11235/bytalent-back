@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PostBackgroundDTO {
+export class UploadFileProjectDTO {
   @ApiProperty({
-    description: 'File background',
+    description: 'Files project',
     type: 'string',
     format: 'binary',
     required: true,

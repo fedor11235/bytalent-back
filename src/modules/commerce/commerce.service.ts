@@ -11,11 +11,8 @@ export class CommerceService {
       include: {
         notifications: {
           where: {
-            OR: [
-              { type: 'operation_history' },
-              { type: 'invoice_payments' },
-            ],
-          }
+            OR: [{ type: 'operation_history' }, { type: 'invoice_payments' }],
+          },
         },
       },
     });
