@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import { User, Prisma } from '@prisma/client';
 
 const PATH_BACKGROUNDS = 'media/backgrounds/';
+const PATH_PROJECT = 'media/project/';
 
 @Injectable()
 export class ProjectService {
@@ -23,12 +24,25 @@ export class ProjectService {
   }
   async uploadFileProject(
     dataUser: any,
-    projectId: any,
+    projectId: number,
     payload: any,
   ): Promise<any> {
-    console.log(projectId);
-    console.log(payload);
-    return 'ok';
+    const filesProject = [];
+    for (const file of payload) {
+      const format = file.mimetype.split('/')[1];
+      const imagesPathFileWrite =
+        PATH_PROJECT + `${new Date().valueOf()}.${format}`;
+      fs.writeFileSync(imagesPathFileWrite, file.buffer);
+      // const fileProject = await this.prisma.files.create({
+      //   data: {
+      //     path: imagesPathFileWrite,
+      //     project_id: projectId,
+      //   },
+      // });
+      // filesProject.push(fileProject)
+      filesProject.push('1');
+    }
+    return filesProject;
   }
   async getBackgrounds(dataUser: any): Promise<any> {
     const user = await this.prisma.user.findFirst({
