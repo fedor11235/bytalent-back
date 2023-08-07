@@ -7,5 +7,5 @@ export class UploadFileProjectDTO {
     format: 'binary',
     required: true,
   })
-  file: Express.Multer.File;
+  files: Array<Express.Multer.File>;
 }

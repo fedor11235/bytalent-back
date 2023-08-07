@@ -26,6 +26,8 @@ export class ProjectService {
     projectId: any,
     payload: any,
   ): Promise<any> {
+    console.log(projectId);
+    console.log(payload);
     return 'ok';
   }
   async getBackgrounds(dataUser: any): Promise<any> {
