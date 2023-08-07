@@ -25,6 +25,7 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import { GetProjectDTO } from '../../dto/project/getProject.dto';
+import { CreateProjectDTO } from '../../dto/project/createProject.dto';
 import { DeleteProjectDTO } from '../../dto/project/deleteProject.dto';
 import { OrderVisualizationDTO } from '../../dto/project/orderVisualization.dto';
 import { ParamsFileProjectDTO } from '../../dto/project/paramsFileProject.dto';
@@ -47,22 +48,36 @@ export class ProjectController {
     return res.status(HttpStatus.OK).json(projectReq);
   }
 
-  @ApiOperation({ summary: 'Order visualization' })
+  @ApiOperation({ summary: 'Get active project' })
+  @ApiBearerAuth()
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: GetProjectDTO,
+  })
+  @UseGuards(AuthGuard)
+  @Get('number')
+  async getAllNumberProjects(@Res() res, @Req() req) {
+    const projectReq = await this.projectService.getAllNumberProjects(req.user);
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
+
+  @ApiOperation({ summary: 'Create project' })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @Post('order')
+  @Post('create')
   @UseInterceptors(FileInterceptor('formdata'))
-  async orderVisualization(
+  async createProject(
     @Res() res,
     @Req() req,
-    @Body() orderVisualizationDTO: OrderVisualizationDTO,
+    @Body() createProjectDTO: CreateProjectDTO,
   ) {
-    const projectReq = await this.projectService.orderVisualization(
+    const projectReq = await this.projectService.createProject(
       req.user,
-      orderVisualizationDTO,
+      createProjectDTO,
     );
     return res.status(HttpStatus.OK).json(projectReq);
   }
+
   @ApiOperation({ summary: 'Upload file project' })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -98,6 +113,7 @@ export class ProjectController {
     );
     return res.status(HttpStatus.OK).json(projectReq);
   }
+
   @ApiOperation({ summary: 'Get backgrounds' })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -106,6 +122,7 @@ export class ProjectController {
     const projectReq = await this.projectService.getBackgrounds(req.user);
     return res.status(HttpStatus.OK).json(projectReq);
   }
+
   @ApiOperation({ summary: 'Post background' })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -136,6 +153,7 @@ export class ProjectController {
     );
     return res.status(HttpStatus.OK).json(projectReq);
   }
+
   @ApiOperation({ summary: 'Delete background' })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)

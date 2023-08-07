@@ -22,6 +22,27 @@ export class ProjectService {
       projects: user.notifications,
     };
   }
+  async createProject(dataUser: any, payload: any): Promise<any> {
+    return this.prisma.project.create({
+      data: {
+        name: payload.name,
+        address: payload.address,
+        type: payload.type,
+        author_id: dataUser.sub,
+      },
+    });
+  }
+  async getAllNumberProjects(dataUser: any): Promise<any> {
+    const user = await this.prisma.user.findFirst({
+      where: { id: dataUser.sub },
+      include: {
+        projects: true,
+      },
+    });
+    return {
+      projects: user.projects.length,
+    };
+  }
   async uploadFileProject(
     dataUser: any,
     projectId: number,
