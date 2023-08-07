@@ -74,10 +74,13 @@ CREATE TABLE "Files" (
 -- CreateTable
 CREATE TABLE "Order" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "personal_assistant" TEXT NOT NULL,
-    "technical_requirements" TEXT NOT NULL,
-    "placement_rules" TEXT NOT NULL,
-    "integration" TEXT NOT NULL,
+    "personal_assistant" TEXT,
+    "technical_requirements" TEXT,
+    "placement_rules" TEXT,
+    "integration" TEXT,
+    "name" TEXT,
+    "phone" TEXT,
+    "email" TEXT,
     "author_id" INTEGER,
     "project_id" INTEGER,
     CONSTRAINT "Order_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE,

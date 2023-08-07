@@ -3,6 +3,7 @@
 
 # media
 /media/backgrounds/*
+/media/project/*
 
 cmd
 # compiled output

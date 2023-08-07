@@ -7,6 +7,7 @@ import { LinksModule } from './modules/links/links.module';
 import { SecurityModule } from './modules/security/security.module';
 import { ProjectModule } from './modules/project/project.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { OrderModule } from './modules/order/order.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     SecurityModule,
     ProjectModule,
     NotificationsModule,
+    OrderModule
   ],
 })
 export class AppModule {}

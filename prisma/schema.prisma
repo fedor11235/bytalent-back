@@ -87,14 +87,20 @@ model Files {
 
 model Order {
   id                        Int      @default(autoincrement()) @id
-  personal_assistant        String
-  technical_requirements    String
-  placement_rules           String
-  integration               String
+
+  // personal_assistant        String?
+  // technical_requirements    String?
+  // placement_rules           String?
+  // integration               String?
+
+  name                      String
+  phone                     String
+  email                     String
+
   author                    User?    @relation(fields: [author_id], references: [id])
   author_id                 Int?
-  project                   Project? @relation(fields: [project_id], references: [id])
-  project_id                Int? @unique
+  // project                   Project? @relation(fields: [project_id], references: [id])
+  // project_id                Int? @unique
 }
 
 // статусы проекта
