@@ -8,9 +8,14 @@ import { SecurityModule } from './modules/security/security.module';
 import { ProjectModule } from './modules/project/project.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { OrderModule } from './modules/order/order.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
     AuthModule,
     CommerceModule,
     ProfileModule,

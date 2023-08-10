@@ -35,12 +35,15 @@ import { ParamsFileProjectDTO } from '../../dto/project/paramsFileProject.dto';
 export class ProjectController {
   constructor(private projectService: ProjectService) {}
 
+  @ApiOperation({ summary: 'Get all projects' })
+  @Get('all')
+  async getAllProjects(@Res() res) {
+    const projectReq = await this.projectService.getAllProjects();
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
+
   @ApiOperation({ summary: 'Get active project' })
   @ApiBearerAuth()
-  @ApiCreatedResponse({
-    description: 'The record has been successfully created.',
-    type: GetProjectDTO,
-  })
   @UseGuards(AuthGuard)
   @Get('active')
   async getActiveProjects(@Res() res, @Req() req) {
@@ -50,14 +53,10 @@ export class ProjectController {
 
   @ApiOperation({ summary: 'Get active project' })
   @ApiBearerAuth()
-  @ApiCreatedResponse({
-    description: 'The record has been successfully created.',
-    type: GetProjectDTO,
-  })
   @UseGuards(AuthGuard)
   @Get('number')
-  async getAllNumberProjects(@Res() res, @Req() req) {
-    const projectReq = await this.projectService.getAllNumberProjects(req.user);
+  async getAllUserProjects(@Res() res, @Req() req) {
+    const projectReq = await this.projectService.getAllUserProjects(req.user);
     return res.status(HttpStatus.OK).json(projectReq);
   }
 

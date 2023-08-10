@@ -5,19 +5,14 @@ import { User, Prisma } from '@prisma/client';
 @Injectable()
 export class OrderService {
   constructor(private prisma: PrismaService) {}
-  // async makeOrder(dataUser: any): Promise<any> {
-  //   const user = await this.prisma.user.findFirst({
-  //     where: { id: dataUser.sub },
-  //   });
-  //   return {
-  //     name: user.name,
-  //     surname: user.surname,
-  //     organization: user.organization,
-  //     position: user.position,
-  //     phone: user.phone,
-  //     email: user.email,
-  //   };
-  // }
+
+  async getAllOrders(): Promise<any> {
+    const orders = await this.prisma.order.findMany()
+    return {
+      orders: orders,
+    };
+  }
+
   async makeOrder(dataUser: any, payload: any): Promise<any> {
     const orderNew = await this.prisma.order.create({
       data: {

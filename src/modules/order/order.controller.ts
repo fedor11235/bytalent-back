@@ -25,18 +25,12 @@ import { MakeOrderDTO } from '../../dto/order/makeOrder.dto';
 export class OrderController {
   constructor(private orderService: OrderService) {}
 
-  // @ApiOperation({ summary: 'Get profile' })
-  // @ApiBearerAuth()
-  // @ApiCreatedResponse({
-  //   description: 'The record has been successfully created.',
-  //   type: GetProfileDTO,
-  // })
-  // @UseGuards(AuthGuard)
-  // @Get()
-  // async getProfileSettings(@Res() res, @Req() req) {
-  //   const profileReq = await this.orderService.getProfileSettings(req.user);
-  //   return res.status(HttpStatus.OK).json(profileReq);
-  // }
+  @ApiOperation({ summary: 'Get all orders' })
+  @Get()
+  async getAllOrders(@Res() res) {
+    const projectReq = await this.orderService.getAllOrders();
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
 
   @ApiOperation({ summary: 'Make an order' })
   @ApiBearerAuth()

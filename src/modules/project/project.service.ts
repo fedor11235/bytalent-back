@@ -22,6 +22,14 @@ export class ProjectService {
       projects: user.notifications,
     };
   }
+
+  async getAllProjects(): Promise<any> {
+    const projects = await this.prisma.project.findMany()
+    return {
+      projects: projects,
+    };
+  }
+
   async createProject(dataUser: any, payload: any): Promise<any> {
     return this.prisma.project.create({
       data: {
@@ -32,7 +40,7 @@ export class ProjectService {
       },
     });
   }
-  async getAllNumberProjects(dataUser: any): Promise<any> {
+  async getAllUserProjects(dataUser: any): Promise<any> {
     const user = await this.prisma.user.findFirst({
       where: { id: dataUser.sub },
       include: {
@@ -40,7 +48,8 @@ export class ProjectService {
       },
     });
     return {
-      projects: user.projects.length,
+      total: user.projects.length,
+      projects: user.projects,
     };
   }
   async uploadFileProject(
