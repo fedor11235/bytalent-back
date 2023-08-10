@@ -1,0 +1,13 @@
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/bytalent.ru/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name bytalent.ru/ www.bytalent.ru;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
