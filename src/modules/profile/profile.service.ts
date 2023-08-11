@@ -19,16 +19,17 @@ export class ProfileService {
     };
   }
   async setProfileSettings(dataUser: any, payload: any): Promise<User> {
+    const dataUpdate = {}
+
+    for(const index in payload) {
+      if(payload[index]) {
+        dataUpdate[index] = payload[index]
+      }
+    }
+    
     const user = await this.prisma.user.update({
       where: { id: dataUser.sub },
-      data: {
-        name: payload.name,
-        surname: payload.surname,
-        organization: payload.organization,
-        position: payload.position,
-        phone: payload.phone,
-        email: payload.email,
-      },
+      data: dataUpdate,
     });
     return user;
   }
