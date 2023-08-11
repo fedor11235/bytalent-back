@@ -1,0 +1,36 @@
+npx prisma migrate dev --name init
+pm2 start dist/main.js --name bytalent
+pm2 startup systemd
+pm2 save
+
+cd /etc/nginx/sites-available/
+
+sudo chmod 777 api.bytalent.me
+
+Done! Congratulations on your new bot. You will find it at t.me/ByTALENTBot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+6574863532:AAEXJ3RpIRnLiUET2GR-RbRjcwn4z_CKXDU
+Keep your token secure and store it safely, it can be used by anyone to control your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+
+sudo ln -s /etc/nginx/sites-available/api.bytalent.me /etc/nginx/sites-enabled/
+
+$ sudo nginx -t
+$ sudo systemctl restart nginx
+
+nano /var/log/nginx/error.log
+
+[PM2] To setup the Startup Script, copy/paste the following command:
+sudo env PATH=$PATH:/home/ubuntu/.nvm/versions/node/v16.18.0/bin /home/ubuntu/.nvm/versions/node/v16.18.0/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
+
+bytalent
+
+45.130.41.38
+dig +short bytalent.ru
+Admin11235
+
+pm2 ls
+pm2 delete bytalent
+rm -R dist
