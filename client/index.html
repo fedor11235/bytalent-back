@@ -1,1 +1,12 @@
-<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.png"><title>By Talent</title><script defer="defer" src="/js/chunk-vendors.0c371298.js"></script><script defer="defer" src="/js/app.729b6df7.js"></script><link href="/css/app.cde3f1b4.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but By Talent doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.png"><title>By Talent</title><script defer="defer" src="/js/chunk-vendors.0c371298.js"></script><script defer="defer" src="/js/app.28469d8a.js"></script><link href="/css/app.9d052d61.css" rel="stylesheet"></head><body><button id="sign-in-with-apple-button">Sign In with Apple</button><script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script><script>AppleID.auth.init({
+            clientId : 'ru.bytalent.client',
+            scope : 'bytalentreg@gmail.com',
+            redirectURI: 'https://www.google.com/',
+            state : 'DE'
+        });
+
+        const buttonElement = document.getElementById('sign-in-with-apple-button');
+        buttonElement.addEventListener('click', () => {
+          console.log(AppleID)
+            AppleID.auth.signIn();
+        });</script><noscript><strong>We're sorry but By Talent doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
