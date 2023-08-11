@@ -29,13 +29,13 @@ export class AuthController {
     return res.status(HttpStatus.OK).json(userLog);
   }
 
-  // @ApiOperation({ summary: 'Registry user' })
-  // @Post('registry')
-  // @UseInterceptors(FileInterceptor('formdata'))
-  // async registryUser(@Res() res, @Body() registrationDTO: any) {
-  //   const userReg = await this.authService.registryUser(registrationDTO);
-  //   return res.status(HttpStatus.OK).json(userReg);
-  // }
+  @ApiOperation({ summary: 'Registration via telegram user' })
+  @Post('telegram')
+  @UseInterceptors(FileInterceptor('formdata'))
+  async registrationTelegramUser(@Res() res, @Body() authDTO: testAuthDTO) {
+    const userReg = await this.authService.registrationTelegramUser(authDTO);
+    return res.status(HttpStatus.OK).json(userReg);
+  }
 
   @ApiOperation({ summary: 'Check user token' })
   @ApiBearerAuth()

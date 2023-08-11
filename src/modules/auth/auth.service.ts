@@ -43,6 +43,44 @@ export class AuthService {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
     };
   }
+  async registrationTelegramUser(payload: any): Promise<any> {
+    const user = await this.prisma.user.findFirst({
+      where: { username: payload.username },
+    });
+    if (user) {
+      return {
+        access_token: await this.jwtService.signAsync({ sub: user.id }),
+      };
+    }
+    const newUser = await this.prisma.user.create({
+      data: {
+        artstation: 'Telegram',
+        username: payload.username,
+        name: payload.name,
+        surname: payload.surname
+      },
+    });
+
+    const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
+
+    for (const index in filesDefault) {
+      const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
+      const imagesPathFileWrite =
+        PATH_BACKGROUNDS + `${new Date().valueOf()}.jpeg`;
+      const img = fs.readFileSync(imagesPathFileRead);
+      fs.writeFileSync(imagesPathFileWrite, img);
+      await this.prisma.backgrounds.create({
+        data: {
+          path: imagesPathFileWrite,
+          author_id: newUser.id,
+        },
+      });
+    }
+
+    return {
+      access_token: await this.jwtService.signAsync({ sub: newUser.id }),
+    };
+  }
   async registryUser(payload: any): Promise<any> {
     return true;
   }
