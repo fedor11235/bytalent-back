@@ -1,7 +1,10 @@
 # переходим в проект обновляем данные
 cd /home/ubuntu/test/bytalent-back
 git pull
-rm -R dist
+ls
+if ! [ -d './dist' ]; then
+  rm -R dist
+fi
 npm run build
 
 # перезапускаем службу
