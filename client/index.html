@@ -23,8 +23,8 @@
 
     const buttonElement = document.getElementById('sign-in-with-apple-button');
     buttonElement.addEventListener('click', () => {
-      console.log(AppleID)
-      AppleID.auth.signIn();
+      const response = window.AppleID.auth.signIn();
+      console.log(response)
     });</script><noscript><strong>We're sorry but By Talent doesn't work properly without JavaScript enabled.
       Please enable it to continue.</strong></noscript>
   <div id="app"></div>
