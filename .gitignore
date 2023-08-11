@@ -1,6 +1,7 @@
 # env
 # .env
 prisma/dev.db
+prisma/migrations
 
 # media
 /media/backgrounds/*
