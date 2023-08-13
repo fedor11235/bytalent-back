@@ -63,8 +63,8 @@ export class AuthService {
       data: {
         artstation: 'Telegram',
         username: payload.username,
-        name: payload.name,
-        surname: payload.surname
+        // name: payload.name,
+        // surname: payload.surname
       },
     });
 
