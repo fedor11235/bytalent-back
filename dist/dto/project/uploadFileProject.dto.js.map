@@ -1,0 +1,1 @@
+{"version":3,"file":"uploadFileProject.dto.js","sourceRoot":"","sources":["../../../src/dto/project/uploadFileProject.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,6CAA8C;AAE9C,MAAa,oBAAoB;CAQhC;AARD,oDAQC;AADC;IANC,IAAA,qBAAW,EAAC;QACX,WAAW,EAAE,eAAe;QAC5B,IAAI,EAAE,QAAQ;QACd,MAAM,EAAE,QAAQ;QAChB,QAAQ,EAAE,IAAI;KACf,CAAC;8BACK,KAAK;mDAAsB"}

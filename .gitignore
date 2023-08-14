@@ -3,6 +3,7 @@
 prisma/dev.db
 prisma/migrations
 prisma/dev.db-journal
+cmd.sh
 
 # media
 /media/backgrounds/*
@@ -10,7 +11,7 @@ prisma/dev.db-journal
 
 cmd
 # compiled output
-/dist
+# /dist
 /node_modules
 
 # Logs

@@ -1,0 +1,1 @@
+{"version":3,"file":"getSecurity.dto.js","sourceRoot":"","sources":["../../../src/dto/security/getSecurity.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,6CAA8C;AAE9C,MAAa,cAAc;CAY1B;AAZD,wCAYC;AAPC;IAJC,IAAA,qBAAW,EAAC;QACX,WAAW,EAAE,oBAAoB;QACjC,QAAQ,EAAE,IAAI;KACf,CAAC;;qDACoB;AAMtB;IAJC,IAAA,qBAAW,EAAC;QACX,WAAW,EAAE,aAAa;QAC1B,QAAQ,EAAE,IAAI;KACf,CAAC;;6CACY"}
