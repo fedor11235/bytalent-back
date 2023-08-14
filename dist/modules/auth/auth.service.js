@@ -68,6 +68,8 @@ let AuthService = exports.AuthService = class AuthService {
             data: {
                 artstation: 'Telegram',
                 username: payload.username,
+                name: payload.name,
+                surname: payload.surname
             },
         });
         const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);

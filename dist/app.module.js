@@ -17,16 +17,11 @@ const security_module_1 = require("./modules/security/security.module");
 const project_module_1 = require("./modules/project/project.module");
 const notifications_module_1 = require("./modules/notifications/notifications.module");
 const order_module_1 = require("./modules/order/order.module");
-const serve_static_1 = require("@nestjs/serve-static");
-const path_1 = require("path");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            serve_static_1.ServeStaticModule.forRoot({
-                rootPath: (0, path_1.join)(__dirname, '..', 'client'),
-            }),
             auth_module_1.AuthModule,
             commerce_module_1.CommerceModule,
             profile_module_1.ProfileModule,
