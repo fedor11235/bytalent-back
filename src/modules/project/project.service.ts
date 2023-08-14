@@ -62,7 +62,7 @@ export class ProjectService {
       const format = file.mimetype.split('/')[1];
       const imagesPathFileWrite =
         PATH_PROJECT + `${new Date().valueOf()}.${format}`;
-      fs.writeFileSync(imagesPathFileWrite, file.buffer);
+      // fs.writeFileSync(imagesPathFileWrite, file.buffer);
       // const fileProject = await this.prisma.files.create({
       //   data: {
       //     path: imagesPathFileWrite,
@@ -82,15 +82,15 @@ export class ProjectService {
       },
     });
     const backgrounds = [];
-    for (const background of user.backgrounds) {
-      const buffer = fs.readFileSync(background.path);
-      const b64 = Buffer.from(buffer).toString('base64');
-      const mimeType = 'image/png';
-      backgrounds.push({
-        id: background.id,
-        img: `data:${mimeType};base64,${b64}`,
-      });
-    }
+    // for (const background of user.backgrounds) {
+    //   const buffer = fs.readFileSync(background.path);
+    //   const b64 = Buffer.from(buffer).toString('base64');
+    //   const mimeType = 'image/png';
+    //   backgrounds.push({
+    //     id: background.id,
+    //     img: `data:${mimeType};base64,${b64}`,
+    //   });
+    // }
     return {
       backgrounds: backgrounds,
     };
@@ -99,7 +99,7 @@ export class ProjectService {
     const format = payload.mimetype.split('/')[1];
     const imagesPathFileWrite =
       PATH_BACKGROUNDS + `${new Date().valueOf()}.${format}`;
-    fs.writeFileSync(imagesPathFileWrite, payload.buffer);
+    // fs.writeFileSync(imagesPathFileWrite, payload.buffer);
     const background = await this.prisma.backgrounds.create({
       data: {
         path: imagesPathFileWrite,

@@ -15,7 +15,7 @@ Keep your token secure and store it safely, it can be used by anyone to control 
 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 
-sudo ln -s /etc/nginx/sites-available/api.bytalent.me /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/bytalent.ru /etc/nginx/sites-enabled/
 
 $ sudo nginx -t
 $ sudo systemctl restart nginx
@@ -46,3 +46,13 @@ Name
 bytalent key
 Key ID
 56N8J94YHM
+
+ssh -i C:\Users\OLEG\.ssh\id_rsa.txt ubuntu@185.86.144.134
+curl -X GET -k localhost:8080
+lsof -ti tcp:[PORT] | xargs kill
+
+~/bytalent-front/dist/
+
+/home/ubuntu/bytalent-front/dist
+
+/etc/nginx/sites-available

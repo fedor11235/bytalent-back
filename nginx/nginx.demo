@@ -11,3 +11,8 @@ server {
                 try_files $uri $uri/ =404;
         }
 }
+
+        location /login {
+                root /usr/share/nginx/html/dist;
+                index index.html;
+        }
