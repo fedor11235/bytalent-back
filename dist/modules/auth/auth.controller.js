@@ -32,7 +32,7 @@ let AuthController = exports.AuthController = class AuthController {
         return res.status(common_1.HttpStatus.OK).json(userReg);
     }
     async registrationAppleUser(res, authDTO) {
-        const userReg = await this.authService.registrationAppleUser(authDTO);
+        const userReg = await this.authService.loginAppleUser(authDTO);
         return res.status(common_1.HttpStatus.OK).json(userReg);
     }
     async logout(res) {

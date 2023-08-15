@@ -6,8 +6,8 @@ prisma/dev.db-journal
 cmd.sh
 
 # media
-/media/backgrounds/*
-/media/project/*
+/media/backgrounds/*.
+/media/project/*.
 
 cmd
 # compiled output

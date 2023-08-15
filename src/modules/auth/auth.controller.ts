@@ -41,7 +41,7 @@ export class AuthController {
   @Post('apple')
   @UseInterceptors(FileInterceptor('formdata'))
   async registrationAppleUser(@Res() res, @Body() authDTO: testAuthDTO) {
-    const userReg = await this.authService.registrationAppleUser(authDTO);
+    const userReg = await this.authService.loginAppleUser(authDTO);
     return res.status(HttpStatus.OK).json(userReg);
   }
 

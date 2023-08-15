@@ -38,6 +38,7 @@ let AuthService = exports.AuthService = class AuthService {
         const newUser = await this.prisma.user.create({
             data: { email: payload.login },
         });
+        await this.creatingDfaultBackgrounds(newUser);
         return {
             access_token: await this.jwtService.signAsync({ sub: newUser.id }),
         };
@@ -59,38 +60,28 @@ let AuthService = exports.AuthService = class AuthService {
                 surname: payload.surname
             },
         });
+        await this.creatingDfaultBackgrounds(newUser);
         return {
             access_token: await this.jwtService.signAsync({ sub: newUser.id }),
         };
     }
-    async registrationAppleUser(payload) {
-        const privateKey = fs.readFileSync(APPLE_KEY);
-        const headers = {
-            kid: KEY_ID,
-            type: undefined
-        };
-        const claims = {
-            'iss': TEAM_ID,
-            'aud': 'https://appleid.apple.com',
-            'sub': CLIENT_ID,
-        };
-        const token = jwt.sign(claims, privateKey, {
-            algorithm: 'ES256',
-            header: headers,
-            expiresIn: '24h'
-        });
-        return {
-            access_token: token,
-        };
+    async loginAppleUser(payload) {
+        return 'ok';
     }
-    async registryUser(payload) {
-        return true;
-    }
-    async logout() {
-        return true;
-    }
-    async deleteUser(payload) {
-        return true;
+    async creatingDfaultBackgrounds(newUser) {
+        const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
+        for (const index in filesDefault) {
+            const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
+            const imagesPathFileWrite = PATH_BACKGROUNDS + `${new Date().valueOf()}.jpeg`;
+            const img = fs.readFileSync(imagesPathFileRead);
+            fs.writeFileSync(imagesPathFileWrite, img);
+            await this.prisma.backgrounds.create({
+                data: {
+                    path: imagesPathFileWrite,
+                    author_id: newUser.id,
+                },
+            });
+        }
     }
 };
 exports.AuthService = AuthService = __decorate([

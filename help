@@ -56,3 +56,8 @@ lsof -ti tcp:[PORT] | xargs kill
 /home/ubuntu/bytalent-front/dist
 
 /etc/nginx/sites-available
+
+sudo nano /etc/nginx/sites-available/bytalent.ru
+
+cp -r ./dist /usr/share/nginx/html/dist
+sudo cp -r ~/bytalent-front/dist /usr/share/nginx/html/dist

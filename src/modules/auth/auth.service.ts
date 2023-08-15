@@ -30,21 +30,7 @@ export class AuthService {
       data: { email: payload.login },
     });
 
-    // const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
-
-    // for (const index in filesDefault) {
-    //   const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
-    //   const imagesPathFileWrite =
-    //     PATH_BACKGROUNDS + `${new Date().valueOf()}.jpeg`;
-    //   const img = fs.readFileSync(imagesPathFileRead);
-    //   fs.writeFileSync(imagesPathFileWrite, img);
-    //   await this.prisma.backgrounds.create({
-    //     data: {
-    //       path: imagesPathFileWrite,
-    //       author_id: newUser.id,
-    //     },
-    //   });
-    // }
+    await this.creatingDfaultBackgrounds(newUser)
 
     return {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
@@ -68,55 +54,75 @@ export class AuthService {
       },
     });
 
-    // const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
-
-    // for (const index in filesDefault) {
-    //   const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
-    //   const imagesPathFileWrite =
-    //     PATH_BACKGROUNDS + `${new Date().valueOf()}.jpeg`;
-    //   const img = fs.readFileSync(imagesPathFileRead);
-    //   fs.writeFileSync(imagesPathFileWrite, img);
-    //   await this.prisma.backgrounds.create({
-    //     data: {
-    //       path: imagesPathFileWrite,
-    //       author_id: newUser.id,
-    //     },
-    //   });
-    // }
+    await this.creatingDfaultBackgrounds(newUser)
 
     return {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
     };
   }
-  async registrationAppleUser(payload: any): Promise<any> {
-    const privateKey = fs.readFileSync(APPLE_KEY); 
-    const headers = { 
-      kid: KEY_ID, 
-      type: undefined // есть ли другой способ удалить тип? 
-    }
-    const claims = { 
-      'iss': TEAM_ID, 
-      'aud': 'https://appleid.apple.com' , 
-      'sub': CLIENT_ID, 
-    }
+  async loginAppleUser(payload: any): Promise<any> {
+    // const user = await this.prisma.user.findFirst({
+    //   where: { username: payload.username },
+    // });
+    // if (user) {
+    //   return {
+    //     access_token: await this.jwtService.signAsync({ sub: user.id }),
+    //   };
+    // }
+    // const newUser = await this.prisma.user.create({
+    //   data: {
+    //     artstation: 'Apple',
+    //     username: payload.username,
+    //     name: payload.name,
+    //     surname: payload.surname
+    //   },
+    // });
 
-    const token = jwt.sign(claims, privateKey, {
-      algorithm: 'ES256',
-      header: headers,
-      expiresIn: '24h'
-     });
+    // await this.creatingDfaultBackgrounds(newUser)
 
-     return {
-      access_token: token,
-    };
+    // return {
+    //   access_token: await this.jwtService.signAsync({ sub: newUser.id }),
+    // };
+    return 'ok'
   }
-  async registryUser(payload: any): Promise<any> {
-    return true;
-  }
-  async logout(): Promise<any> {
-    return true;
-  }
-  async deleteUser(payload: any): Promise<any> {
-    return true;
+  async creatingDfaultBackgrounds(newUser: User) {
+    const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
+
+    for (const index in filesDefault) {
+      const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
+      const imagesPathFileWrite =
+        PATH_BACKGROUNDS + `${new Date().valueOf()}.jpeg`;
+      const img = fs.readFileSync(imagesPathFileRead);
+      fs.writeFileSync(imagesPathFileWrite, img);
+      await this.prisma.backgrounds.create({
+        data: {
+          path: imagesPathFileWrite,
+          author_id: newUser.id,
+        },
+      });
+    }
   }
 }
+
+  // async registrationAppleUser(payload: any): Promise<any> {
+  //   const privateKey = fs.readFileSync(APPLE_KEY); 
+  //   const headers = { 
+  //     kid: KEY_ID, 
+  //     type: undefined // есть ли другой способ удалить тип? 
+  //   }
+  //   const claims = { 
+  //     'iss': TEAM_ID, 
+  //     'aud': 'https://appleid.apple.com' , 
+  //     'sub': CLIENT_ID, 
+  //   }
+
+  //   const token = jwt.sign(claims, privateKey, {
+  //     algorithm: 'ES256',
+  //     header: headers,
+  //     expiresIn: '24h'
+  //    });
+
+  //    return {
+  //     access_token: token,
+  //   };
+  // }
