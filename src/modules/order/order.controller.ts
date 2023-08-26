@@ -37,11 +37,7 @@ export class OrderController {
   @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('formdata'))
-  async makeOrder(
-    @Res() res,
-    @Req() req,
-    @Body() makeOrderDTO: MakeOrderDTO,
-  ) {
+  async makeOrder(@Res() res, @Req() req, @Body() makeOrderDTO: MakeOrderDTO) {
     const profileReq = await this.orderService.makeOrder(
       req.user,
       makeOrderDTO,

@@ -163,4 +163,22 @@ export class ProjectController {
     );
     return res.status(HttpStatus.OK).json(projectReq);
   }
+
+  @ApiOperation({ summary: 'Update background' })
+  @ApiBearerAuth()
+  @UseInterceptors(FileInterceptor('formdata'))
+  @UseGuards(AuthGuard)
+  @Post('update/:id')
+  async updateProject(
+    @Res() res,
+    @Param() params: DeleteProjectDTO,
+    @Body() body: any,
+  ) {
+    console.log(body);
+    const projectReq = await this.projectService.updateProject(
+      Number(params.id),
+      body,
+    );
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
 }

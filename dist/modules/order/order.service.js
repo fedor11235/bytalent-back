@@ -28,7 +28,7 @@ let OrderService = exports.OrderService = class OrderService {
                 name: payload.name,
                 phone: payload.phone,
                 email: payload.email,
-                author_id: dataUser.sub
+                author_id: dataUser.sub,
             },
         });
         return orderNew;

@@ -127,6 +127,19 @@ let ProjectService = exports.ProjectService = class ProjectService {
             },
         });
     }
+    async updateProject(projectId, payload) {
+        const dataUpdate = {};
+        for (const index in payload) {
+            if (payload[index]) {
+                dataUpdate[index] = payload[index];
+            }
+        }
+        const project = await this.prisma.project.update({
+            where: { id: projectId },
+            data: dataUpdate,
+        });
+        return project;
+    }
 };
 exports.ProjectService = ProjectService = __decorate([
     (0, common_1.Injectable)(),

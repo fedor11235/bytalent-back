@@ -10,9 +10,9 @@ const PATH_BACKGROUNDS = 'media/backgrounds/';
 const PATH_BACKGROUNDS_DEFAULT = 'media/default/';
 const APPLE_KEY = 'apple-key.p8';
 // const KEY_ID = '56N8J94YHM'
-const TEAM_ID = ''
-const CLIENT_ID = ''
-const KEY_ID = ''
+const TEAM_ID = '';
+const CLIENT_ID = '';
+const KEY_ID = '';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +30,7 @@ export class AuthService {
       data: { email: payload.login },
     });
 
-    await this.creatingDfaultBackgrounds(newUser)
+    await this.creatingDfaultBackgrounds(newUser);
 
     return {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
@@ -50,11 +50,11 @@ export class AuthService {
         artstation: 'Telegram',
         username: payload.username,
         name: payload.name,
-        surname: payload.surname
+        surname: payload.surname,
       },
     });
 
-    await this.creatingDfaultBackgrounds(newUser)
+    await this.creatingDfaultBackgrounds(newUser);
 
     return {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
@@ -83,7 +83,7 @@ export class AuthService {
     // return {
     //   access_token: await this.jwtService.signAsync({ sub: newUser.id }),
     // };
-    return 'ok'
+    return 'ok';
   }
   async creatingDfaultBackgrounds(newUser: User) {
     const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
@@ -104,25 +104,25 @@ export class AuthService {
   }
 }
 
-  // async registrationAppleUser(payload: any): Promise<any> {
-  //   const privateKey = fs.readFileSync(APPLE_KEY); 
-  //   const headers = { 
-  //     kid: KEY_ID, 
-  //     type: undefined // есть ли другой способ удалить тип? 
-  //   }
-  //   const claims = { 
-  //     'iss': TEAM_ID, 
-  //     'aud': 'https://appleid.apple.com' , 
-  //     'sub': CLIENT_ID, 
-  //   }
+// async registrationAppleUser(payload: any): Promise<any> {
+//   const privateKey = fs.readFileSync(APPLE_KEY);
+//   const headers = {
+//     kid: KEY_ID,
+//     type: undefined // есть ли другой способ удалить тип?
+//   }
+//   const claims = {
+//     'iss': TEAM_ID,
+//     'aud': 'https://appleid.apple.com' ,
+//     'sub': CLIENT_ID,
+//   }
 
-  //   const token = jwt.sign(claims, privateKey, {
-  //     algorithm: 'ES256',
-  //     header: headers,
-  //     expiresIn: '24h'
-  //    });
+//   const token = jwt.sign(claims, privateKey, {
+//     algorithm: 'ES256',
+//     header: headers,
+//     expiresIn: '24h'
+//    });
 
-  //    return {
-  //     access_token: token,
-  //   };
-  // }
+//    return {
+//     access_token: token,
+//   };
+// }

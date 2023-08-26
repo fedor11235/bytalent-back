@@ -24,7 +24,7 @@ import { OrderModule } from './modules/order/order.module';
     SecurityModule,
     ProjectModule,
     NotificationsModule,
-    OrderModule
+    OrderModule,
   ],
 })
 export class AppModule {}

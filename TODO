@@ -4,3 +4,8 @@
 подумать как подругому отправть файлы в браузер
 Придумать уникальное имя файлу
 Убрать из отслеживания файл базы данных
+
+
+background-size: auto 100%;
+background-position: right;
+background-repeat: no-repeat;

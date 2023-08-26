@@ -11,4 +11,5 @@ export declare class ProjectService {
     postBackgrounds(dataUser: any, payload: any): Promise<any>;
     deleteBackgrounds(id: number): Promise<any>;
     orderVisualization(dataUser: any, payload: any): Promise<any>;
+    updateProject(projectId: number, payload: any): Promise<any>;
 }

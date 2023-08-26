@@ -7,7 +7,7 @@ export class OrderService {
   constructor(private prisma: PrismaService) {}
 
   async getAllOrders(): Promise<any> {
-    const orders = await this.prisma.order.findMany()
+    const orders = await this.prisma.order.findMany();
     return {
       orders: orders,
     };
@@ -19,7 +19,7 @@ export class OrderService {
         name: payload.name,
         phone: payload.phone,
         email: payload.email,
-        author_id: dataUser.sub
+        author_id: dataUser.sub,
       },
     });
     return orderNew;

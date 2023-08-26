@@ -22,14 +22,12 @@ export class ProjectService {
       projects: user.notifications,
     };
   }
-
   async getAllProjects(): Promise<any> {
-    const projects = await this.prisma.project.findMany()
+    const projects = await this.prisma.project.findMany();
     return {
       projects: projects,
     };
   }
-
   async createProject(dataUser: any, payload: any): Promise<any> {
     return this.prisma.project.create({
       data: {
@@ -69,7 +67,7 @@ export class ProjectService {
           project_id: projectId,
         },
       });
-      filesProject.push(fileProject)
+      filesProject.push(fileProject);
       filesProject.push('1');
     }
     return filesProject;
@@ -124,5 +122,18 @@ export class ProjectService {
         type: payload.type,
       },
     });
+  }
+  async updateProject(projectId: number, payload: any): Promise<any> {
+    const dataUpdate = {};
+    for (const index in payload) {
+      if (payload[index]) {
+        dataUpdate[index] = payload[index];
+      }
+    }
+    const project = await this.prisma.project.update({
+      where: { id: projectId },
+      data: dataUpdate,
+    });
+    return project;
   }
 }

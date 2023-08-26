@@ -57,7 +57,7 @@ let AuthService = exports.AuthService = class AuthService {
                 artstation: 'Telegram',
                 username: payload.username,
                 name: payload.name,
-                surname: payload.surname
+                surname: payload.surname,
             },
         });
         await this.creatingDfaultBackgrounds(newUser);

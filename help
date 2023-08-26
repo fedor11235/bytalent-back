@@ -47,6 +47,7 @@ bytalent key
 Key ID
 56N8J94YHM
 
+ssh -i C:\Users\exferd\.ssh\id_rsa ubuntu@185.86.144.134
 ssh -i C:\Users\OLEG\.ssh\id_rsa.txt ubuntu@185.86.144.134
 curl -X GET -k localhost:8080
 lsof -ti tcp:[PORT] | xargs kill
@@ -60,4 +61,8 @@ lsof -ti tcp:[PORT] | xargs kill
 sudo nano /etc/nginx/sites-available/bytalent.ru
 
 cp -r ./dist /usr/share/nginx/html/dist
-sudo cp -r ~/bytalent-front/dist /usr/share/nginx/html/dist
+
+sudo rm -R /usr/share/nginx/html/dist
+sudo cp -r ./dist /usr/share/nginx/html/dist
+
+rm -Rfv моя_папка

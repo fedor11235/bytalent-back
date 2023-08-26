@@ -30,7 +30,7 @@ exports.AppModule = AppModule = __decorate([
             security_module_1.SecurityModule,
             project_module_1.ProjectModule,
             notifications_module_1.NotificationsModule,
-            order_module_1.OrderModule
+            order_module_1.OrderModule,
         ],
     })
 ], AppModule);
