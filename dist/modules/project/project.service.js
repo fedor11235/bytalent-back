@@ -98,6 +98,22 @@ let ProjectService = exports.ProjectService = class ProjectService {
             backgrounds: backgrounds,
         };
     }
+    async selectBackground(projectId, backgroundId) {
+        const background = await this.prisma.backgrounds.findFirst({
+            where: { id: backgroundId }
+        });
+        const buffer = fs.readFileSync(background.path);
+        const b64 = Buffer.from(buffer).toString('base64');
+        const mimeType = 'image/png';
+        const projectBgrBase64 = `data:${mimeType};base64,${b64}`;
+        await this.prisma.project.update({
+            where: { id: projectId },
+            data: {
+                background: projectBgrBase64
+            },
+        });
+        return 'ok';
+    }
     async postBackgrounds(dataUser, payload) {
         const format = payload.mimetype.split('/')[1];
         const imagesPathFileWrite = PATH_BACKGROUNDS + `${new Date().valueOf()}.${format}`;

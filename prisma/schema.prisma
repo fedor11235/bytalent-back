@@ -60,7 +60,7 @@ model Project {
   images      String?
   files       Files?
   city        String?
-  background  Backgrounds?
+  background  String?
   links       String?
   status      String?  @default("add_information")
   comments    String?
@@ -68,6 +68,7 @@ model Project {
   author      User?    @relation(fields: [author_id], references: [id])
   author_id   Int
   // order Order?
+  // дополнительная информация
 }
 
 model Backgrounds {
@@ -75,8 +76,8 @@ model Backgrounds {
   path        String
   author      User?    @relation(fields: [author_id], references: [id])
   author_id   Int?
-  project     Project? @relation(fields: [project_id], references: [id])
-  project_id  Int? @unique
+  // project     Project? @relation(fields: [project_id], references: [id])
+  // project_id  Int? @unique
 }
 
 model Files {

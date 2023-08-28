@@ -58,8 +58,11 @@ let ProjectController = exports.ProjectController = class ProjectController {
         return res.status(common_1.HttpStatus.OK).json(projectReq);
     }
     async updateProject(res, params, body) {
-        console.log(body);
         const projectReq = await this.projectService.updateProject(Number(params.id), body);
+        return res.status(common_1.HttpStatus.OK).json(projectReq);
+    }
+    async selectBackground(res, params) {
+        const projectReq = await this.projectService.selectBackground(Number(params.projectId), Number(params.backgroundId));
         return res.status(common_1.HttpStatus.OK).json(projectReq);
     }
 };
@@ -188,7 +191,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "deleteBackgrounds", null);
 __decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Update background' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Update backgrounds' }),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('formdata')),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
@@ -200,6 +203,17 @@ __decorate([
     __metadata("design:paramtypes", [Object, deleteProject_dto_1.DeleteProjectDTO, Object]),
     __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "updateProject", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Select background' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)('background/:projectId/:backgroundId'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], ProjectController.prototype, "selectBackground", null);
 exports.ProjectController = ProjectController = __decorate([
     (0, swagger_1.ApiTags)('Project'),
     (0, common_1.Controller)('project'),

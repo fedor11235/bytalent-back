@@ -8,6 +8,7 @@ export declare class ProjectService {
     getAllUserProjects(dataUser: any): Promise<any>;
     uploadFileProject(dataUser: any, projectId: number, payload: any): Promise<any>;
     getBackgrounds(dataUser: any): Promise<any>;
+    selectBackground(projectId: number, backgroundId: number): Promise<any>;
     postBackgrounds(dataUser: any, payload: any): Promise<any>;
     deleteBackgrounds(id: number): Promise<any>;
     orderVisualization(dataUser: any, payload: any): Promise<any>;

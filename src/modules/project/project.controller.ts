@@ -164,7 +164,7 @@ export class ProjectController {
     return res.status(HttpStatus.OK).json(projectReq);
   }
 
-  @ApiOperation({ summary: 'Update background' })
+  @ApiOperation({ summary: 'Update backgrounds' })
   @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('formdata'))
   @UseGuards(AuthGuard)
@@ -174,10 +174,24 @@ export class ProjectController {
     @Param() params: DeleteProjectDTO,
     @Body() body: any,
   ) {
-    console.log(body);
     const projectReq = await this.projectService.updateProject(
       Number(params.id),
       body,
+    );
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
+
+  @ApiOperation({ summary: 'Select background' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Get('background/:projectId/:backgroundId')
+  async selectBackground(
+    @Res() res,
+    @Param() params: any,
+  ) {
+    const projectReq = await this.projectService.selectBackground(
+      Number(params.projectId),
+      Number(params.backgroundId),
     );
     return res.status(HttpStatus.OK).json(projectReq);
   }

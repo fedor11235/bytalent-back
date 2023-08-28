@@ -15,4 +15,5 @@ export declare class ProjectController {
     postBackgrounds(res: any, req: any, file: Express.Multer.File): Promise<any>;
     deleteBackgrounds(res: any, params: DeleteProjectDTO): Promise<any>;
     updateProject(res: any, params: DeleteProjectDTO, body: any): Promise<any>;
+    selectBackground(res: any, params: any): Promise<any>;
 }
