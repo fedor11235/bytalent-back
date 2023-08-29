@@ -52,7 +52,11 @@ let ProjectService = exports.ProjectService = class ProjectService {
         const user = await this.prisma.user.findFirst({
             where: { id: dataUser.sub },
             include: {
-                projects: true,
+                projects: {
+                    include: {
+                        background: true,
+                    },
+                },
             },
         });
         return {
@@ -86,12 +90,11 @@ let ProjectService = exports.ProjectService = class ProjectService {
         });
         const backgrounds = [];
         for (const background of user.backgrounds) {
-            const buffer = fs.readFileSync(background.path);
-            const b64 = Buffer.from(buffer).toString('base64');
-            const mimeType = 'image/png';
             backgrounds.push({
                 id: background.id,
-                img: `data:${mimeType};base64,${b64}`,
+                type: background.type,
+                name: background.name,
+                format: background.format,
             });
         }
         return {
@@ -100,27 +103,31 @@ let ProjectService = exports.ProjectService = class ProjectService {
     }
     async selectBackground(projectId, backgroundId) {
         const background = await this.prisma.backgrounds.findFirst({
-            where: { id: backgroundId }
+            where: { id: backgroundId },
         });
-        const buffer = fs.readFileSync(background.path);
-        const b64 = Buffer.from(buffer).toString('base64');
-        const mimeType = 'image/png';
-        const projectBgrBase64 = `data:${mimeType};base64,${b64}`;
         await this.prisma.project.update({
             where: { id: projectId },
             data: {
-                background: projectBgrBase64
+                background_id: background.id,
             },
         });
         return 'ok';
     }
     async postBackgrounds(dataUser, payload) {
         const format = payload.mimetype.split('/')[1];
-        const imagesPathFileWrite = PATH_BACKGROUNDS + `${new Date().valueOf()}.${format}`;
+        const name = String(new Date().valueOf());
+        const imagesPathFileWrite = PATH_BACKGROUNDS + `${name}.${format}`;
         fs.writeFileSync(imagesPathFileWrite, payload.buffer);
+        let type = 'img';
+        if (/(mp4|MP4|mov|MOV)$/.test(format)) {
+            type = 'video';
+        }
         const background = await this.prisma.backgrounds.create({
             data: {
                 path: imagesPathFileWrite,
+                format: format,
+                name: name,
+                type: type,
                 author_id: dataUser.sub,
             },
         });

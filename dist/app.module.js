@@ -17,6 +17,7 @@ const security_module_1 = require("./modules/security/security.module");
 const project_module_1 = require("./modules/project/project.module");
 const notifications_module_1 = require("./modules/notifications/notifications.module");
 const order_module_1 = require("./modules/order/order.module");
+const file_module_1 = require("./modules/file/file.module");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -31,6 +32,7 @@ exports.AppModule = AppModule = __decorate([
             project_module_1.ProjectModule,
             notifications_module_1.NotificationsModule,
             order_module_1.OrderModule,
+            file_module_1.FileModule,
         ],
     })
 ], AppModule);

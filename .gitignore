@@ -9,6 +9,9 @@ cmd.sh
 /media/backgrounds/*.*
 /media/project/*.
 
+# static
+/static/*.
+
 cmd
 # compiled output
 # /dist

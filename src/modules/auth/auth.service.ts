@@ -2,7 +2,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 // import jwt from 'jsonwebtoken';
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 import * as fs from 'fs';
 import { User, Prisma } from '@prisma/client';
 
@@ -89,14 +89,19 @@ export class AuthService {
     const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
 
     for (const index in filesDefault) {
+      const format = 'jpeg';
+      const name = String(new Date().valueOf());
+      const type = 'img';
       const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
-      const imagesPathFileWrite =
-        PATH_BACKGROUNDS + `${new Date().valueOf()}.jpeg`;
+      const imagesPathFileWrite = PATH_BACKGROUNDS + `${name}.${format}`;
       const img = fs.readFileSync(imagesPathFileRead);
       fs.writeFileSync(imagesPathFileWrite, img);
       await this.prisma.backgrounds.create({
         data: {
           path: imagesPathFileWrite,
+          format: format,
+          name: name,
+          type: type,
           author_id: newUser.id,
         },
       });

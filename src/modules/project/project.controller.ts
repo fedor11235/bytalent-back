@@ -185,10 +185,7 @@ export class ProjectController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('background/:projectId/:backgroundId')
-  async selectBackground(
-    @Res() res,
-    @Param() params: any,
-  ) {
+  async selectBackground(@Res() res, @Param() params: any) {
     const projectReq = await this.projectService.selectBackground(
       Number(params.projectId),
       Number(params.backgroundId),

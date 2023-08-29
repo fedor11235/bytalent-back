@@ -60,13 +60,14 @@ model Project {
   images      String?
   files       Files?
   city        String?
-  background  String?
   links       String?
   status      String?  @default("add_information")
   comments    String?
   likes       Int?
   author      User?    @relation(fields: [author_id], references: [id])
   author_id   Int
+  background  Backgrounds? @relation(fields: [background_id], references: [id])
+  background_id Int?
   // order Order?
   // дополнительная информация
 }
@@ -74,10 +75,12 @@ model Project {
 model Backgrounds {
   id          Int      @default(autoincrement()) @id
   path        String
-  author      User?    @relation(fields: [author_id], references: [id])
-  author_id   Int?
-  // project     Project? @relation(fields: [project_id], references: [id])
-  // project_id  Int? @unique
+  type        String
+  format      String
+  name        String
+  author      User    @relation(fields: [author_id], references: [id])
+  author_id   Int
+  project     Project[]
 }
 
 model Files {

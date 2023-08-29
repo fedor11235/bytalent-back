@@ -13,7 +13,6 @@ exports.AuthService = void 0;
 const jwt_1 = require("@nestjs/jwt");
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const jwt = require('jsonwebtoken');
 const fs = require("fs");
 const PATH_BACKGROUNDS = 'media/backgrounds/';
 const PATH_BACKGROUNDS_DEFAULT = 'media/default/';
@@ -71,13 +70,19 @@ let AuthService = exports.AuthService = class AuthService {
     async creatingDfaultBackgrounds(newUser) {
         const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
         for (const index in filesDefault) {
+            const format = 'jpeg';
+            const name = String(new Date().valueOf());
+            const type = 'img';
             const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
-            const imagesPathFileWrite = PATH_BACKGROUNDS + `${new Date().valueOf()}.jpeg`;
+            const imagesPathFileWrite = PATH_BACKGROUNDS + `${name}.${format}`;
             const img = fs.readFileSync(imagesPathFileRead);
             fs.writeFileSync(imagesPathFileWrite, img);
             await this.prisma.backgrounds.create({
                 data: {
                     path: imagesPathFileWrite,
+                    format: format,
+                    name: name,
+                    type: type,
                     author_id: newUser.id,
                 },
             });
