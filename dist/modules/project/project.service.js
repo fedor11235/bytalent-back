@@ -13,7 +13,9 @@ exports.ProjectService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const fs = require("fs");
+const child_process_1 = require("child_process");
 const PATH_BACKGROUNDS = 'media/backgrounds/';
+const PATH_POSTERS = 'media/posters/';
 const PATH_PROJECT = 'media/project/';
 let ProjectService = exports.ProjectService = class ProjectService {
     constructor(prisma) {
@@ -59,8 +61,12 @@ let ProjectService = exports.ProjectService = class ProjectService {
                 },
             },
         });
+        let total = 0;
+        if (user.projects?.length) {
+            total = user.projects.length;
+        }
         return {
-            total: user.projects.length,
+            total: total,
             projects: user.projects,
         };
     }
@@ -95,6 +101,7 @@ let ProjectService = exports.ProjectService = class ProjectService {
                 type: background.type,
                 name: background.name,
                 format: background.format,
+                poster_path: background.poster_path,
             });
         }
         return {
@@ -117,10 +124,14 @@ let ProjectService = exports.ProjectService = class ProjectService {
         const format = payload.mimetype.split('/')[1];
         const name = String(new Date().valueOf());
         const imagesPathFileWrite = PATH_BACKGROUNDS + `${name}.${format}`;
+        const imagesPathFilePoster = PATH_POSTERS + `${name}.jpg`;
         fs.writeFileSync(imagesPathFileWrite, payload.buffer);
         let type = 'img';
         if (/(mp4|MP4|mov|MOV)$/.test(format)) {
             type = 'video';
+        }
+        if (type === 'video') {
+            (0, child_process_1.exec)(`ffmpeg -i ${imagesPathFileWrite} -ss 00:00:01 -vframes 1 ${imagesPathFilePoster}`);
         }
         const background = await this.prisma.backgrounds.create({
             data: {
@@ -129,6 +140,7 @@ let ProjectService = exports.ProjectService = class ProjectService {
                 name: name,
                 type: type,
                 author_id: dataUser.sub,
+                poster_path: `${name}.jpg`,
             },
         });
         return background;

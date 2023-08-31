@@ -22,13 +22,17 @@ let FileController = exports.FileController = class FileController {
     constructor(fileService) {
         this.fileService = fileService;
     }
-    getFile(res, params) {
+    getFileBg(res, params) {
         const file = (0, fs_1.createReadStream)((0, path_1.join)(process.cwd() + '/media/backgrounds/' + params.name));
+        return new common_1.StreamableFile(file);
+    }
+    getFilePoster(res, params) {
+        const file = (0, fs_1.createReadStream)((0, path_1.join)(process.cwd() + '/media/posters/' + params.name));
         return new common_1.StreamableFile(file);
     }
 };
 __decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Get file' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Get file background' }),
     (0, common_1.Header)('Content-Type', 'application/json'),
     (0, common_1.Header)('Content-Disposition', 'attachment; filename="package.json"'),
     (0, common_1.Get)('background/:name'),
@@ -37,7 +41,18 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", common_1.StreamableFile)
-], FileController.prototype, "getFile", null);
+], FileController.prototype, "getFileBg", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Get file posters' }),
+    (0, common_1.Header)('Content-Type', 'application/json'),
+    (0, common_1.Header)('Content-Disposition', 'attachment; filename="package.json"'),
+    (0, common_1.Get)('poster/:name'),
+    __param(0, (0, common_1.Res)({ passthrough: true })),
+    __param(1, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", common_1.StreamableFile)
+], FileController.prototype, "getFilePoster", null);
 exports.FileController = FileController = __decorate([
     (0, swagger_1.ApiTags)('Files'),
     (0, common_1.Controller)('file'),

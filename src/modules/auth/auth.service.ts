@@ -30,7 +30,7 @@ export class AuthService {
       data: { email: payload.login },
     });
 
-    await this.creatingDfaultBackgrounds(newUser);
+    // await this.creatingDfaultBackgrounds(newUser);
 
     return {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
@@ -54,7 +54,7 @@ export class AuthService {
       },
     });
 
-    await this.creatingDfaultBackgrounds(newUser);
+    // await this.creatingDfaultBackgrounds(newUser);
 
     return {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
@@ -85,28 +85,28 @@ export class AuthService {
     // };
     return 'ok';
   }
-  async creatingDfaultBackgrounds(newUser: User) {
-    const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
+  // async creatingDfaultBackgrounds(newUser: User) {
+  //   const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);
 
-    for (const index in filesDefault) {
-      const format = 'jpeg';
-      const name = String(new Date().valueOf());
-      const type = 'img';
-      const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
-      const imagesPathFileWrite = PATH_BACKGROUNDS + `${name}.${format}`;
-      const img = fs.readFileSync(imagesPathFileRead);
-      fs.writeFileSync(imagesPathFileWrite, img);
-      await this.prisma.backgrounds.create({
-        data: {
-          path: imagesPathFileWrite,
-          format: format,
-          name: name,
-          type: type,
-          author_id: newUser.id,
-        },
-      });
-    }
-  }
+  //   for (const index in filesDefault) {
+  //     const format = 'jpeg';
+  //     const name = String(new Date().valueOf());
+  //     const type = 'img';
+  //     const imagesPathFileRead = PATH_BACKGROUNDS_DEFAULT + filesDefault[index];
+  //     const imagesPathFileWrite = PATH_BACKGROUNDS + `${name}.${format}`;
+  //     const img = fs.readFileSync(imagesPathFileRead);
+  //     fs.writeFileSync(imagesPathFileWrite, img);
+  //     await this.prisma.backgrounds.create({
+  //       data: {
+  //         path: imagesPathFileWrite,
+  //         format: format,
+  //         name: name,
+  //         type: type,
+  //         author_id: newUser.id,
+  //       },
+  //     });
+  //   }
+  // }
 }
 
 // async registrationAppleUser(payload: any): Promise<any> {

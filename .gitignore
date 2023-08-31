@@ -8,6 +8,7 @@ cmd.sh
 # media
 /media/backgrounds/*.*
 /media/project/*.
+/media/posters/*.*
 
 # static
 /static/*.

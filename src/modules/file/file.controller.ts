@@ -19,18 +19,34 @@ import { createReadStream } from 'fs';
 export class FileController {
   constructor(private fileService: FileService) {}
 
-  @ApiOperation({ summary: 'Get file' })
+  @ApiOperation({ summary: 'Get file background' })
   // @ApiBearerAuth()
   // @UseGuards(AuthGuard)
   @Header('Content-Type', 'application/json')
   @Header('Content-Disposition', 'attachment; filename="package.json"')
   @Get('background/:name')
-  getFile(
+  getFileBg(
     @Res({ passthrough: true }) res: Response,
     @Param() params: any,
   ): StreamableFile {
     const file = createReadStream(
       join(process.cwd() + '/media/backgrounds/' + params.name),
+    );
+    return new StreamableFile(file);
+  }
+
+  @ApiOperation({ summary: 'Get file posters' })
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  @Header('Content-Type', 'application/json')
+  @Header('Content-Disposition', 'attachment; filename="package.json"')
+  @Get('poster/:name')
+  getFilePoster(
+    @Res({ passthrough: true }) res: Response,
+    @Param() params: any,
+  ): StreamableFile {
+    const file = createReadStream(
+      join(process.cwd() + '/media/posters/' + params.name),
     );
     return new StreamableFile(file);
   }

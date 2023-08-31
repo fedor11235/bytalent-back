@@ -75,6 +75,7 @@ model Project {
 model Backgrounds {
   id          Int      @default(autoincrement()) @id
   path        String
+  poster_path String
   type        String
   format      String
   name        String
