@@ -31,7 +31,7 @@ let ProjectService = exports.ProjectService = class ProjectService {
             },
         });
         return {
-            projects: user.notifications,
+            projects: user.notifications ? user.notifications : [],
         };
     }
     async getAllProjects() {
@@ -61,14 +61,22 @@ let ProjectService = exports.ProjectService = class ProjectService {
                 },
             },
         });
-        let total = 0;
-        if (user.projects?.length) {
-            total = user.projects.length;
+        if (user) {
+            let total = 0;
+            if (user.projects?.length) {
+                total = user.projects.length;
+            }
+            return {
+                total: total,
+                projects: user.projects,
+            };
         }
-        return {
-            total: total,
-            projects: user.projects,
-        };
+        else {
+            return {
+                total: 0,
+                projects: [],
+            };
+        }
     }
     async uploadFileProject(dataUser, projectId, payload) {
         const filesProject = [];
@@ -94,19 +102,26 @@ let ProjectService = exports.ProjectService = class ProjectService {
                 backgrounds: true,
             },
         });
-        const backgrounds = [];
-        for (const background of user.backgrounds) {
-            backgrounds.push({
-                id: background.id,
-                type: background.type,
-                name: background.name,
-                format: background.format,
-                poster_path: background.poster_path,
-            });
+        if (user) {
+            const backgrounds = [];
+            for (const background of user.backgrounds) {
+                backgrounds.push({
+                    id: background.id,
+                    type: background.type,
+                    name: background.name,
+                    format: background.format,
+                    poster_path: background.poster_path,
+                });
+            }
+            return {
+                backgrounds: backgrounds,
+            };
         }
-        return {
-            backgrounds: backgrounds,
-        };
+        else {
+            return {
+                backgrounds: [],
+            };
+        }
     }
     async selectBackground(projectId, backgroundId) {
         const background = await this.prisma.backgrounds.findFirst({

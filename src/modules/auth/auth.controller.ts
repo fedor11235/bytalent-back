@@ -32,15 +32,15 @@ export class AuthController {
   @ApiOperation({ summary: 'Registration/Login via telegram user' })
   @Post('telegram')
   @UseInterceptors(FileInterceptor('formdata'))
-  async registrationTelegramUser(@Res() res, @Body() authDTO: testAuthDTO) {
-    const userReg = await this.authService.registrationTelegramUser(authDTO);
+  async loginTelegramUser(@Res() res, @Body() authDTO: testAuthDTO) {
+    const userReg = await this.authService.loginTelegramUser(authDTO);
     return res.status(HttpStatus.OK).json(userReg);
   }
 
   @ApiOperation({ summary: 'Registration/Login via apple id user' })
   @Post('apple')
   @UseInterceptors(FileInterceptor('formdata'))
-  async registrationAppleUser(@Res() res, @Body() authDTO: testAuthDTO) {
+  async loginAppleUser(@Res() res, @Body() authDTO: testAuthDTO) {
     const userReg = await this.authService.loginAppleUser(authDTO);
     return res.status(HttpStatus.OK).json(userReg);
   }

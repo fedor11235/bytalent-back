@@ -26,7 +26,7 @@ let AuthService = exports.AuthService = class AuthService {
     }
     async loginUser(payload) {
         const user = await this.prisma.user.findFirst({
-            where: { email: payload.login },
+            where: { username: payload.login },
         });
         if (user) {
             return {
@@ -34,13 +34,13 @@ let AuthService = exports.AuthService = class AuthService {
             };
         }
         const newUser = await this.prisma.user.create({
-            data: { email: payload.login },
+            data: { username: payload.login },
         });
         return {
             access_token: await this.jwtService.signAsync({ sub: newUser.id }),
         };
     }
-    async registrationTelegramUser(payload) {
+    async loginTelegramUser(payload) {
         const user = await this.prisma.user.findFirst({
             where: { username: payload.username },
         });
@@ -51,7 +51,7 @@ let AuthService = exports.AuthService = class AuthService {
         }
         const newUser = await this.prisma.user.create({
             data: {
-                artstation: 'Telegram',
+                authorization: 'Telegram',
                 username: payload.username,
                 name: payload.name,
                 surname: payload.surname,
@@ -62,7 +62,25 @@ let AuthService = exports.AuthService = class AuthService {
         };
     }
     async loginAppleUser(payload) {
-        return 'ok';
+        const user = await this.prisma.user.findFirst({
+            where: { username: payload.username },
+        });
+        if (user) {
+            return {
+                access_token: await this.jwtService.signAsync({ sub: user.id }),
+            };
+        }
+        const newUser = await this.prisma.user.create({
+            data: {
+                authorization: 'Apple',
+                username: payload.username,
+                name: payload.name,
+                surname: payload.surname,
+            },
+        });
+        return {
+            access_token: await this.jwtService.signAsync({ sub: newUser.id }),
+        };
     }
 };
 exports.AuthService = AuthService = __decorate([

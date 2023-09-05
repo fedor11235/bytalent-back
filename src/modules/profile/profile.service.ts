@@ -9,21 +9,31 @@ export class ProfileService {
     const user = await this.prisma.user.findFirst({
       where: { id: dataUser.sub },
     });
-    return {
-      name: user.name,
-      surname: user.surname,
-      organization: user.organization,
-      position: user.position,
-      phone: user.phone,
-      email: user.email,
-    };
+    if (user) {
+      return {
+        name: user.name,
+        surname: user.surname,
+        organization: user.organization,
+        position: user.position,
+        phone: user.phone,
+        email: user.email,
+        username: user.username,
+      };
+    } else {
+      return {
+        name: '',
+        surname: '',
+        organization: '',
+        position: '',
+        phone: '',
+        username: '',
+      };
+    }
   }
   async setProfileSettings(dataUser: any, payload: any): Promise<User> {
     const dataUpdate = {};
     for (const index in payload) {
-      if (payload[index]) {
-        dataUpdate[index] = payload[index];
-      }
+      dataUpdate[index] = payload[index];
     }
     const user = await this.prisma.user.update({
       where: { id: dataUser.sub },

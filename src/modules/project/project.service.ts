@@ -24,7 +24,7 @@ export class ProjectService {
       },
     });
     return {
-      projects: user.notifications,
+      projects: user.notifications ? user.notifications : [],
     };
   }
   async getAllProjects(): Promise<any> {
@@ -54,14 +54,21 @@ export class ProjectService {
         },
       },
     });
-    let total = 0;
-    if (user.projects?.length) {
-      total = user.projects.length;
+    if (user) {
+      let total = 0;
+      if (user.projects?.length) {
+        total = user.projects.length;
+      }
+      return {
+        total: total,
+        projects: user.projects,
+      };
+    } else {
+      return {
+        total: 0,
+        projects: [],
+      };
     }
-    return {
-      total: total,
-      projects: user.projects,
-    };
   }
   async uploadFileProject(
     dataUser: any,
@@ -92,19 +99,25 @@ export class ProjectService {
         backgrounds: true,
       },
     });
-    const backgrounds = [];
-    for (const background of user.backgrounds) {
-      backgrounds.push({
-        id: background.id,
-        type: background.type,
-        name: background.name,
-        format: background.format,
-        poster_path: background.poster_path,
-      });
+    if (user) {
+      const backgrounds = [];
+      for (const background of user.backgrounds) {
+        backgrounds.push({
+          id: background.id,
+          type: background.type,
+          name: background.name,
+          format: background.format,
+          poster_path: background.poster_path,
+        });
+      }
+      return {
+        backgrounds: backgrounds,
+      };
+    } else {
+      return {
+        backgrounds: [],
+      };
     }
-    return {
-      backgrounds: backgrounds,
-    };
   }
   async selectBackground(
     projectId: number,

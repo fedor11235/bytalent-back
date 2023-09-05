@@ -19,7 +19,7 @@ export class AuthService {
   constructor(private prisma: PrismaService, private jwtService: JwtService) {}
   async loginUser(payload: any): Promise<any> {
     const user = await this.prisma.user.findFirst({
-      where: { email: payload.login },
+      where: { username: payload.login },
     });
     if (user) {
       return {
@@ -27,16 +27,14 @@ export class AuthService {
       };
     }
     const newUser = await this.prisma.user.create({
-      data: { email: payload.login },
+      data: { username: payload.login },
     });
-
-    // await this.creatingDfaultBackgrounds(newUser);
 
     return {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
     };
   }
-  async registrationTelegramUser(payload: any): Promise<any> {
+  async loginTelegramUser(payload: any): Promise<any> {
     const user = await this.prisma.user.findFirst({
       where: { username: payload.username },
     });
@@ -47,43 +45,38 @@ export class AuthService {
     }
     const newUser = await this.prisma.user.create({
       data: {
-        artstation: 'Telegram',
+        authorization: 'Telegram',
         username: payload.username,
         name: payload.name,
         surname: payload.surname,
       },
     });
 
-    // await this.creatingDfaultBackgrounds(newUser);
-
     return {
       access_token: await this.jwtService.signAsync({ sub: newUser.id }),
     };
   }
   async loginAppleUser(payload: any): Promise<any> {
-    // const user = await this.prisma.user.findFirst({
-    //   where: { username: payload.username },
-    // });
-    // if (user) {
-    //   return {
-    //     access_token: await this.jwtService.signAsync({ sub: user.id }),
-    //   };
-    // }
-    // const newUser = await this.prisma.user.create({
-    //   data: {
-    //     artstation: 'Apple',
-    //     username: payload.username,
-    //     name: payload.name,
-    //     surname: payload.surname
-    //   },
-    // });
+    const user = await this.prisma.user.findFirst({
+      where: { username: payload.username },
+    });
+    if (user) {
+      return {
+        access_token: await this.jwtService.signAsync({ sub: user.id }),
+      };
+    }
+    const newUser = await this.prisma.user.create({
+      data: {
+        authorization: 'Apple',
+        username: payload.username,
+        name: payload.name,
+        surname: payload.surname,
+      },
+    });
 
-    // await this.creatingDfaultBackgrounds(newUser)
-
-    // return {
-    //   access_token: await this.jwtService.signAsync({ sub: newUser.id }),
-    // };
-    return 'ok';
+    return {
+      access_token: await this.jwtService.signAsync({ sub: newUser.id }),
+    };
   }
   // async creatingDfaultBackgrounds(newUser: User) {
   //   const filesDefault = fs.readdirSync(PATH_BACKGROUNDS_DEFAULT);

@@ -5,6 +5,6 @@ export declare class AuthService {
     private jwtService;
     constructor(prisma: PrismaService, jwtService: JwtService);
     loginUser(payload: any): Promise<any>;
-    registrationTelegramUser(payload: any): Promise<any>;
+    loginTelegramUser(payload: any): Promise<any>;
     loginAppleUser(payload: any): Promise<any>;
 }

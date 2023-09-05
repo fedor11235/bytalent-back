@@ -27,11 +27,11 @@ let AuthController = exports.AuthController = class AuthController {
         const userLog = await this.authService.loginUser(authDTO);
         return res.status(common_1.HttpStatus.OK).json(userLog);
     }
-    async registrationTelegramUser(res, authDTO) {
-        const userReg = await this.authService.registrationTelegramUser(authDTO);
+    async loginTelegramUser(res, authDTO) {
+        const userReg = await this.authService.loginTelegramUser(authDTO);
         return res.status(common_1.HttpStatus.OK).json(userReg);
     }
-    async registrationAppleUser(res, authDTO) {
+    async loginAppleUser(res, authDTO) {
         const userReg = await this.authService.loginAppleUser(authDTO);
         return res.status(common_1.HttpStatus.OK).json(userReg);
     }
@@ -58,7 +58,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, testAuth_dto_1.testAuthDTO]),
     __metadata("design:returntype", Promise)
-], AuthController.prototype, "registrationTelegramUser", null);
+], AuthController.prototype, "loginTelegramUser", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Registration/Login via apple id user' }),
     (0, common_1.Post)('apple'),
@@ -68,7 +68,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, testAuth_dto_1.testAuthDTO]),
     __metadata("design:returntype", Promise)
-], AuthController.prototype, "registrationAppleUser", null);
+], AuthController.prototype, "loginAppleUser", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Check user token' }),
     (0, swagger_1.ApiBearerAuth)(),

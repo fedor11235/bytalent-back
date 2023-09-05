@@ -4,7 +4,7 @@ export declare class AuthController {
     private authService;
     constructor(authService: AuthService);
     loginUser(res: any, authDTO: testAuthDTO): Promise<any>;
-    registrationTelegramUser(res: any, authDTO: testAuthDTO): Promise<any>;
-    registrationAppleUser(res: any, authDTO: testAuthDTO): Promise<any>;
+    loginTelegramUser(res: any, authDTO: testAuthDTO): Promise<any>;
+    loginAppleUser(res: any, authDTO: testAuthDTO): Promise<any>;
     logout(res: any): Promise<any>;
 }
