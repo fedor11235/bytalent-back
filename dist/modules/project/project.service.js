@@ -80,6 +80,7 @@ let ProjectService = exports.ProjectService = class ProjectService {
     }
     async uploadFileProject(dataUser, projectId, payload) {
         const filesProject = [];
+        console.log(projectId);
         for (const file of payload) {
             const format = file.mimetype.split('/')[1];
             const imagesPathFileWrite = PATH_PROJECT + `${new Date().valueOf()}.${format}`;
@@ -87,11 +88,10 @@ let ProjectService = exports.ProjectService = class ProjectService {
             const fileProject = await this.prisma.files.create({
                 data: {
                     path: imagesPathFileWrite,
-                    project_id: projectId,
+                    project_id: Number(projectId),
                 },
             });
             filesProject.push(fileProject);
-            filesProject.push('1');
         }
         return filesProject;
     }

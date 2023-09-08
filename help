@@ -1,4 +1,5 @@
 npx prisma migrate dev --name init
+pm2 delete bytalent-api
 pm2 start dist/main.js --name bytalent-api
 pm2 startup systemd
 pm2 save
