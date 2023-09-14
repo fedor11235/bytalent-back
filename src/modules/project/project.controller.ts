@@ -60,6 +60,17 @@ export class ProjectController {
     return res.status(HttpStatus.OK).json(projectReq);
   }
 
+  @ApiOperation({ summary: 'Delete background' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Delete('project/:id')
+  async deleteProject(@Res() res, @Param() params: DeleteProjectDTO) {
+    const projectReq = await this.projectService.deleteProject(
+      Number(params.id),
+    );
+    return res.status(HttpStatus.OK).json(projectReq);
+  }
+
   @ApiOperation({ summary: 'Create project' })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)

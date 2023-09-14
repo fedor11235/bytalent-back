@@ -59,7 +59,7 @@ model Project {
   info        String?
   info_dop        String?
   images      String?
-  files       Files?
+  files       Files[]
   city        String?
   links       String?
   status      String?  @default("add_information")
@@ -89,7 +89,7 @@ model Files {
   id          Int      @default(autoincrement()) @id
   path        String
   project     Project? @relation(fields: [project_id], references: [id])
-  project_id  Int? @unique
+  project_id  Int?
 }
 
 model Order {

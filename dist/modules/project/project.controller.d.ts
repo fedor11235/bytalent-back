@@ -9,6 +9,7 @@ export declare class ProjectController {
     getAllProjects(res: any): Promise<any>;
     getActiveProjects(res: any, req: any): Promise<any>;
     getAllUserProjects(res: any, req: any): Promise<any>;
+    deleteProject(res: any, params: DeleteProjectDTO): Promise<any>;
     createProject(res: any, req: any, createProjectDTO: CreateProjectDTO): Promise<any>;
     uploadFileProject(res: any, req: any, files: Array<Express.Multer.File>, params: ParamsFileProjectDTO): Promise<any>;
     getBackgrounds(res: any, req: any): Promise<any>;

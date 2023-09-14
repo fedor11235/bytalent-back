@@ -37,6 +37,10 @@ let ProjectController = exports.ProjectController = class ProjectController {
         const projectReq = await this.projectService.getAllUserProjects(req.user);
         return res.status(common_1.HttpStatus.OK).json(projectReq);
     }
+    async deleteProject(res, params) {
+        const projectReq = await this.projectService.deleteProject(Number(params.id));
+        return res.status(common_1.HttpStatus.OK).json(projectReq);
+    }
     async createProject(res, req, createProjectDTO) {
         const projectReq = await this.projectService.createProject(req.user, createProjectDTO);
         return res.status(common_1.HttpStatus.OK).json(projectReq);
@@ -96,6 +100,17 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "getAllUserProjects", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Delete background' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Delete)('project/:id'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, deleteProject_dto_1.DeleteProjectDTO]),
+    __metadata("design:returntype", Promise)
+], ProjectController.prototype, "deleteProject", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Create project' }),
     (0, swagger_1.ApiBearerAuth)(),

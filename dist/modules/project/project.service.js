@@ -50,6 +50,12 @@ let ProjectService = exports.ProjectService = class ProjectService {
             },
         });
     }
+    async deleteProject(id) {
+        const project = await this.prisma.project.delete({
+            where: { id: id },
+        });
+        return project;
+    }
     async getAllUserProjects(dataUser) {
         const user = await this.prisma.user.findFirst({
             where: { id: dataUser.sub },
@@ -80,9 +86,8 @@ let ProjectService = exports.ProjectService = class ProjectService {
     }
     async uploadFileProject(dataUser, projectId, payload) {
         const filesProject = [];
-        console.log(projectId);
         for (const file of payload) {
-            const format = file.mimetype.split('/')[1];
+            const format = file.originalname.split('.')[1];
             const imagesPathFileWrite = PATH_PROJECT + `${new Date().valueOf()}.${format}`;
             fs.writeFileSync(imagesPathFileWrite, file.buffer);
             const fileProject = await this.prisma.files.create({
