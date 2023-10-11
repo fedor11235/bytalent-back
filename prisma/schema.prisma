@@ -35,7 +35,7 @@ model User {
   authorization String?
   two_fa String?
   order Order[]
-  backgrounds Backgrounds[]
+  // backgrounds Backgrounds[]
   projects Project[]
   notifications Notification[]
 }
@@ -57,32 +57,40 @@ model Project {
   name        String?
   address     String?
   info        String?
-  info_dop        String?
+  info_dop    String?
   images      String?
   files       Files[]
   city        String?
   links       String?
-  status      String?  @default("add_information")
+  status      String?         @default("add_information")
   comments    String?
   likes       Int?
-  author      User?    @relation(fields: [author_id], references: [id])
+  backgrounds Backgrounds[]   @relation("backgrounds")
+  author      User            @relation(fields: [author_id], references: [id])
   author_id   Int
-  background  Backgrounds? @relation(fields: [background_id], references: [id])
-  background_id Int?
+
+  background  Backgrounds?    @relation("background", fields: [background_id], references: [id])
+  background_id Int?           
+
+
+  
   // order Order?
   // дополнительная информация
 }
 
 model Backgrounds {
-  id          Int      @default(autoincrement()) @id
-  path        String
-  poster_path String
-  type        String
-  format      String
-  name        String
-  author      User    @relation(fields: [author_id], references: [id])
-  author_id   Int
-  project     Project[]
+  id                Int      @default(autoincrement()) @id
+  path              String
+  poster_path       String
+  type              String
+  format            String
+  name              String
+  // author      User    @relation(fields: [author_id], references: [id])
+  // author_id   Int
+  project            Project?  @relation("backgrounds", fields: [project_id], references: [id])
+  project_id         Int      
+
+  project_bgr_active Project[] @relation("background")
 }
 
 model Files {

@@ -12,8 +12,8 @@ export declare class ProjectController {
     deleteProject(res: any, params: DeleteProjectDTO): Promise<any>;
     createProject(res: any, req: any, createProjectDTO: CreateProjectDTO): Promise<any>;
     uploadFileProject(res: any, req: any, files: Array<Express.Multer.File>, params: ParamsFileProjectDTO): Promise<any>;
-    getBackgrounds(res: any, req: any): Promise<any>;
-    postBackgrounds(res: any, req: any, file: Express.Multer.File): Promise<any>;
+    getBackgrounds(res: any, req: any, params: any): Promise<any>;
+    postBackgrounds(res: any, req: any, params: any, file: Express.Multer.File): Promise<any>;
     deleteBackgrounds(res: any, params: DeleteProjectDTO): Promise<any>;
     updateProject(res: any, params: DeleteProjectDTO, body: any): Promise<any>;
     selectBackground(res: any, params: any): Promise<any>;

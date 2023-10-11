@@ -24,10 +24,8 @@ import {
   ApiConsumes,
   ApiBody,
 } from '@nestjs/swagger';
-import { GetProjectDTO } from '../../dto/project/getProject.dto';
 import { CreateProjectDTO } from '../../dto/project/createProject.dto';
 import { DeleteProjectDTO } from '../../dto/project/deleteProject.dto';
-import { OrderVisualizationDTO } from '../../dto/project/orderVisualization.dto';
 import { ParamsFileProjectDTO } from '../../dto/project/paramsFileProject.dto';
 
 @ApiTags('Project')
@@ -127,9 +125,9 @@ export class ProjectController {
   @ApiOperation({ summary: 'Get backgrounds' })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @Get('backgrounds')
-  async getBackgrounds(@Res() res, @Req() req) {
-    const projectReq = await this.projectService.getBackgrounds(req.user);
+  @Get('backgrounds/:projectId')
+  async getBackgrounds(@Res() res, @Req() req, @Param() params: any,) {
+    const projectReq = await this.projectService.getBackgrounds(params.projectId);
     return res.status(HttpStatus.OK).json(projectReq);
   }
 
@@ -151,15 +149,17 @@ export class ProjectController {
       },
     },
   })
-  @Post('backgrounds')
+  @Post('backgrounds/:projectId')
   async postBackgrounds(
     @Res() res,
     @Req() req,
+    @Param() params: any,
     @UploadedFile() file: Express.Multer.File,
   ) {
     const projectReq = await this.projectService.postBackgrounds(
       req.user,
       file,
+      Number(params.projectId)
     );
     return res.status(HttpStatus.OK).json(projectReq);
   }

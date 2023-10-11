@@ -13,12 +13,6 @@ exports.AuthService = void 0;
 const jwt_1 = require("@nestjs/jwt");
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const PATH_BACKGROUNDS = 'media/backgrounds/';
-const PATH_BACKGROUNDS_DEFAULT = 'media/default/';
-const APPLE_KEY = 'apple-key.p8';
-const TEAM_ID = '';
-const CLIENT_ID = '';
-const KEY_ID = '';
 let AuthService = exports.AuthService = class AuthService {
     constructor(prisma, jwtService) {
         this.prisma = prisma;

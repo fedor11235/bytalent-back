@@ -46,7 +46,7 @@ let ProjectService = exports.ProjectService = class ProjectService {
                 name: payload.name,
                 address: payload.address,
                 type: payload.type,
-                author_id: dataUser.sub,
+                author: { connect: { id: dataUser.sub } }
             },
         });
     }
@@ -100,16 +100,16 @@ let ProjectService = exports.ProjectService = class ProjectService {
         }
         return filesProject;
     }
-    async getBackgrounds(dataUser) {
-        const user = await this.prisma.user.findFirst({
-            where: { id: dataUser.sub },
+    async getBackgrounds(projectId) {
+        const project = await this.prisma.project.findFirst({
+            where: { id: Number(projectId) },
             include: {
-                backgrounds: true,
-            },
+                backgrounds: true
+            }
         });
-        if (user) {
+        if (project) {
             const backgrounds = [];
-            for (const background of user.backgrounds) {
+            for (const background of project.backgrounds) {
                 backgrounds.push({
                     id: background.id,
                     type: background.type,
@@ -140,7 +140,7 @@ let ProjectService = exports.ProjectService = class ProjectService {
         });
         return 'ok';
     }
-    async postBackgrounds(dataUser, payload) {
+    async postBackgrounds(dataUser, payload, projectId) {
         const format = payload.mimetype.split('/')[1];
         const name = String(new Date().valueOf());
         const imagesPathFileWrite = PATH_BACKGROUNDS + `${name}.${format}`;
@@ -159,7 +159,7 @@ let ProjectService = exports.ProjectService = class ProjectService {
                 format: format,
                 name: name,
                 type: type,
-                author_id: dataUser.sub,
+                project_id: projectId,
                 poster_path: `${name}.jpg`,
             },
         });
@@ -171,16 +171,6 @@ let ProjectService = exports.ProjectService = class ProjectService {
         });
         fs.unlinkSync(background.path);
         return background;
-    }
-    async orderVisualization(dataUser, payload) {
-        return this.prisma.project.create({
-            data: {
-                name: payload.title,
-                author_id: dataUser.sub,
-                address: payload.address,
-                type: payload.type,
-            },
-        });
     }
     async updateProject(projectId, payload) {
         const dataUpdate = {};

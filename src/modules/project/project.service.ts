@@ -38,12 +38,13 @@ export class ProjectService {
     };
   }
   async createProject(dataUser: any, payload: any): Promise<any> {
+
     return this.prisma.project.create({
       data: {
         name: payload.name,
         address: payload.address,
-        type: payload.type,
-        author_id: dataUser.sub,
+        type: payload.type, 
+        author: { connect: { id: dataUser.sub } }
       },
     });
   }
@@ -104,16 +105,16 @@ export class ProjectService {
     }
     return filesProject;
   }
-  async getBackgrounds(dataUser: any): Promise<any> {
-    const user = await this.prisma.user.findFirst({
-      where: { id: dataUser.sub },
+  async getBackgrounds(projectId: any): Promise<any> {
+    const project = await this.prisma.project.findFirst({
+      where: { id: Number(projectId) },
       include: {
-        backgrounds: true,
-      },
+        backgrounds: true
+      }
     });
-    if (user) {
+    if (project) {
       const backgrounds = [];
-      for (const background of user.backgrounds) {
+      for (const background of project.backgrounds) {
         backgrounds.push({
           id: background.id,
           type: background.type,
@@ -147,7 +148,7 @@ export class ProjectService {
     });
     return 'ok';
   }
-  async postBackgrounds(dataUser: any, payload: any): Promise<any> {
+  async postBackgrounds(dataUser: any, payload: any, projectId: any): Promise<any> {
     const format = payload.mimetype.split('/')[1];
     const name = String(new Date().valueOf());
     const imagesPathFileWrite = PATH_BACKGROUNDS + `${name}.${format}`;
@@ -168,7 +169,8 @@ export class ProjectService {
         format: format,
         name: name,
         type: type,
-        author_id: dataUser.sub,
+        project_id: projectId,
+        // author_id: dataUser.sub,
         poster_path: `${name}.jpg`,
       },
     });
@@ -181,16 +183,16 @@ export class ProjectService {
     fs.unlinkSync(background.path);
     return background;
   }
-  async orderVisualization(dataUser: any, payload: any): Promise<any> {
-    return this.prisma.project.create({
-      data: {
-        name: payload.title,
-        author_id: dataUser.sub,
-        address: payload.address,
-        type: payload.type,
-      },
-    });
-  }
+  // async orderVisualization(dataUser: any, payload: any): Promise<any> {
+  //   return this.prisma.project.create({
+  //     data: {
+  //       name: payload.title,
+  //       author_id: dataUser.sub,
+  //       address: payload.address,
+  //       type: payload.type,
+  //     },
+  //   });
+  // }
   async updateProject(projectId: number, payload: any): Promise<any> {
     const dataUpdate = {};
     for (const index in payload) {

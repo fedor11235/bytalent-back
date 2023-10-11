@@ -3,16 +3,16 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 // import jwt from 'jsonwebtoken';
 // const jwt = require('jsonwebtoken');
-import * as fs from 'fs';
-import { User, Prisma } from '@prisma/client';
+// import * as fs from 'fs';
+// import { User, Prisma } from '@prisma/client';
 
-const PATH_BACKGROUNDS = 'media/backgrounds/';
-const PATH_BACKGROUNDS_DEFAULT = 'media/default/';
-const APPLE_KEY = 'apple-key.p8';
+// const PATH_BACKGROUNDS = 'media/backgrounds/';
+// const PATH_BACKGROUNDS_DEFAULT = 'media/default/';
+// const APPLE_KEY = 'apple-key.p8';
 // const KEY_ID = '56N8J94YHM'
-const TEAM_ID = '';
-const CLIENT_ID = '';
-const KEY_ID = '';
+// const TEAM_ID = '';
+// const CLIENT_ID = '';
+// const KEY_ID = '';
 
 @Injectable()
 export class AuthService {

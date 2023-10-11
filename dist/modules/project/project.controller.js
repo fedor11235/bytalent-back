@@ -49,12 +49,12 @@ let ProjectController = exports.ProjectController = class ProjectController {
         const projectReq = await this.projectService.uploadFileProject(req.user, params.id, files);
         return res.status(common_1.HttpStatus.OK).json(projectReq);
     }
-    async getBackgrounds(res, req) {
-        const projectReq = await this.projectService.getBackgrounds(req.user);
+    async getBackgrounds(res, req, params) {
+        const projectReq = await this.projectService.getBackgrounds(params.projectId);
         return res.status(common_1.HttpStatus.OK).json(projectReq);
     }
-    async postBackgrounds(res, req, file) {
-        const projectReq = await this.projectService.postBackgrounds(req.user, file);
+    async postBackgrounds(res, req, params, file) {
+        const projectReq = await this.projectService.postBackgrounds(req.user, file, Number(params.projectId));
         return res.status(common_1.HttpStatus.OK).json(projectReq);
     }
     async deleteBackgrounds(res, params) {
@@ -160,11 +160,12 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get backgrounds' }),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)('backgrounds'),
+    (0, common_1.Get)('backgrounds/:projectId'),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "getBackgrounds", null);
 __decorate([
@@ -186,12 +187,13 @@ __decorate([
             },
         },
     }),
-    (0, common_1.Post)('backgrounds'),
+    (0, common_1.Post)('backgrounds/:projectId'),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Req)()),
-    __param(2, (0, common_1.UploadedFile)()),
+    __param(2, (0, common_1.Param)()),
+    __param(3, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object, Object]),
     __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "postBackgrounds", null);
 __decorate([

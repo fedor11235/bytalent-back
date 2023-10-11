@@ -17,9 +17,8 @@ Keep your token secure and store it safely, it can be used by anyone to control 
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 
 sudo ln -s /etc/nginx/sites-available/bytalent.ru /etc/nginx/sites-enabled/
-
-$ sudo nginx -t
-$ sudo systemctl restart nginx
+sudo nginx -t
+sudo systemctl restart nginx
 
 nano /var/log/nginx/error.log
 
