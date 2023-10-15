@@ -5,6 +5,7 @@ prisma/migrations
 prisma/dev.db-journal
 cmd.sh
 helpers
+.env
 
 # media
 /media/backgrounds/*.*
