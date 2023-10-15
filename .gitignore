@@ -4,6 +4,7 @@ prisma/dev.db
 prisma/migrations
 prisma/dev.db-journal
 cmd.sh
+helpers
 
 # media
 /media/backgrounds/*.*
